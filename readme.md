@@ -26,4 +26,7 @@ Run the following command to start training
 python train.py --model pointnet2_sem_seg --log_dir pointnet2_sem_seg
 ```
 
+## Reference
+[charlesq34/PointNet++](https://github.com/charlesq34/pointnet2)
+[yanx27/Pointnet_Pointnet2_pytorch](https://github.com/yanx27/Pointnet_Pointnet2_pytorch)
 

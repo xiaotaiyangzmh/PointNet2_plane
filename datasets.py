@@ -15,7 +15,7 @@ class pointData(Dataset):
 
     rootpath: "./data"
     train_ratio: the number of files for training
-    mod: train or val
+    mod: train or test
     """
     
     def __init__(self, rootpath, num_classes, num_point, block_size, train_ratio, mod):
@@ -36,16 +36,16 @@ class pointData(Dataset):
 
         # split data
         model_num = len(cloud_files)
-        train_size = int(model_num * train_ratio + 0.5)
+        train_size = int(model_num * train_ratio)
         indices = list(range(model_num))
         random.seed(4)
         random.shuffle(indices)
         if mod == "train":
             split_indices = indices[:train_size]
-        elif mod == "val":
+        elif mod == "test":
             split_indices = indices[train_size:]
         else:
-            raise Exception("mod should be train or val")
+            raise Exception("mod should be train or test")
         print(f"loading {len(split_indices)} models ...")
 
         self.points_list, self.labels_list = [], []
@@ -75,7 +75,7 @@ class pointData(Dataset):
                 lines = f.readlines()
             # 0 for non-plane, 1 for plane
             l_labels = [int(l[0]) if int(l[0]) == 0 else 1 for l in lines]
-            labels = np.asarray(l_labels).reshape(-1, 1)
+            labels = np.asarray(l_labels)
             tmp, _ = np.histogram(labels, range(3))
             labelweights += tmp
             coord_min, coord_max = np.amin(points, axis=0)[:3], np.amax(points, axis=0)[:3]
@@ -91,7 +91,7 @@ class pointData(Dataset):
         num_iter = int(np.sum(num_point_all) / num_point)
 
         cloud_idxs = []
-        for index in range(len(cloud_files)):
+        for index in range(len(split_indices)):
             cloud_idxs.extend([index] * int(round(sample_prob[index] * num_iter)))
         self.cloud_idxs = np.array(cloud_idxs)
 

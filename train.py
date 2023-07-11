@@ -20,6 +20,13 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ROOT_DIR = BASE_DIR
 sys.path.append(os.path.join(ROOT_DIR, 'models'))
 
+classes = ['non-plane', 'plane']
+class2label = {cls: i for i, cls in enumerate(classes)}
+seg_classes = class2label
+seg_label_to_cat = {}
+for i, cat in enumerate(seg_classes.keys()):
+    seg_label_to_cat[i] = cat
+
 def inplace_relu(m):
     classname = m.__class__.__name__
     if classname.find('ReLU') != -1:
@@ -42,7 +49,7 @@ def parse_args():
     parser = argparse.ArgumentParser('Model')
     parser.add_argument('--model', type=str, default='pointnet2_sem_seg', help='model name [default: pointnet_sem_seg]')
     parser.add_argument('--batch_size', type=int, default=16, help='Batch Size during training [default: 16]')
-    parser.add_argument('--train_ratio', default=0.9, type=float, help='ratio of train set')
+    parser.add_argument('--train_ratio', default=0.7, type=float, help='ratio of train set')
     parser.add_argument('--epoch', default=32, type=int, help='Epoch to run [default: 32]')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='Initial learning rate [default: 0.001]')
     parser.add_argument('--gpu', type=str, default='0', help='GPU to use [default: GPU 0]')
@@ -89,7 +96,7 @@ def main(args):
     log_string(args)
 
     '''HYPER PARAMETER'''
-    root = './data'
+    rootpath = "./data"
     num_classes = 2
     num_points = args.npoint
     batch_size = args.batch_size
@@ -97,20 +104,29 @@ def main(args):
     train_ratio = args.train_ratio
     epochs = args.epoch
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    print("using {} device.".format(device))
+    log_string("using {} device.".format(device))
 
     '''DATASET LOADING'''
-    print("start loading training data ...")
-    train_set = pointData("./data", num_classes, num_points, 1.0, train_ratio, "train")
+    log_string("start loading training data ...")
+    train_set = pointData(rootpath, num_classes, num_points, 1.0, train_ratio, "train")
     train_loader = DataLoader(train_set,
                               batch_size=batch_size,
                               shuffle=True,
                               pin_memory=True, 
                               drop_last=True,
                               num_workers=0)
-    samples_num = train_set.__len__()
-    print("using {} samples for training.".format(samples_num))
+    log_string("using {} samples for training.".format(train_set.__len__()))
     weights = torch.Tensor(train_set.labelweights).to(device)
+
+    log_string("start loading testing data ...")
+    test_set = pointData(rootpath, num_classes, num_points, 1.0, train_ratio, "test")
+    test_loader = DataLoader(test_set,
+                              batch_size=batch_size,
+                              shuffle=False,
+                              pin_memory=True, 
+                              drop_last=True,
+                              num_workers=0)
+    log_string("using {} samples for testing.".format(test_set.__len__()))
 
     '''MODEL LOADING'''
     MODEL = importlib.import_module(args.model)
@@ -176,7 +192,7 @@ def main(args):
             points = points.data.numpy()
             points[:, :, :3] = provider.rotate_point_cloud_z(points[:, :, :3])
             points = torch.Tensor(points)
-            points, target = points.float().cuda(), target.long().cuda()
+            points, target = points.float().to(device), target.long().to(device)
             points = points.transpose(2, 1)
 
             seg_pred, trans_feat = classifier(points)
@@ -202,16 +218,90 @@ def main(args):
         log_string('Training accuracy: %f' % (total_correct / float(total_seen)))
 
         if epoch % 5 == 0:
-            logger.info('Save model...')
+            log_string('Saving model....')
             savepath = str(checkpoints_dir) + '/model.pth'
-            log_string('Saving at %s' % savepath)
+            log_string('Model Saved at %s' % savepath)
             state = {
                 'epoch': epoch,
                 'model_state_dict': classifier.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
             }
             torch.save(state, savepath)
-            log_string('Saving model....')
+            log_string('Model saved successfully!')
+
+        '''Evaluate on chopped scenes'''
+        with torch.no_grad():
+            num_batches = len(test_loader)
+            total_correct = 0
+            total_seen = 0
+            loss_sum = 0
+            labelweights = np.zeros(num_classes)
+            total_seen_class = [0 for _ in range(num_classes)]
+            total_correct_class = [0 for _ in range(num_classes)]
+            total_iou_deno_class = [0 for _ in range(num_classes)]
+            classifier = classifier.eval()
+
+            log_string('---- EPOCH %03d EVALUATION ----' % (global_epoch + 1))
+            for i, (points, target) in tqdm(enumerate(test_loader), total=len(test_loader), smoothing=0.9):
+                points = points.data.numpy()
+                points = torch.Tensor(points)
+                points, target = points.float().to(device), target.long().to(device)
+                points = points.transpose(2, 1)
+
+                seg_pred, trans_feat = classifier(points)
+                pred_val = seg_pred.contiguous().cpu().data.numpy()
+                seg_pred = seg_pred.contiguous().view(-1, num_classes)
+
+                batch_label = target.cpu().data.numpy()
+                target = target.view(-1, 1)[:, 0]
+                loss = criterion(seg_pred, target, trans_feat, weights)
+                loss_sum += loss
+                pred_val = np.argmax(pred_val, 2)
+                correct = np.sum((pred_val == batch_label))
+                total_correct += correct
+                total_seen += (batch_size * num_points)
+                tmp, _ = np.histogram(batch_label, range(num_classes + 1))
+                labelweights += tmp
+
+                for l in range(num_classes):
+                    total_seen_class[l] += np.sum((batch_label == l))
+                    total_correct_class[l] += np.sum((pred_val == l) & (batch_label == l))
+                    total_iou_deno_class[l] += np.sum(((pred_val == l) | (batch_label == l)))
+
+            labelweights = labelweights.astype(np.float32) / np.sum(labelweights.astype(np.float32))
+            mIoU = np.mean(np.array(total_correct_class) / (np.array(total_iou_deno_class, dtype=np.float64) + 1e-6))
+            log_string('eval mean loss: %f' % (loss_sum / float(num_batches)))
+            log_string('eval point avg class IoU: %f' % (mIoU))
+            log_string('eval point accuracy: %f' % (total_correct / float(total_seen)))
+            log_string('eval point avg class acc: %f' % (
+                np.mean(np.array(total_correct_class) / (np.array(total_seen_class, dtype=np.float64) + 1e-6))))
+
+            iou_per_class_str = '------- IoU --------\n'
+            for l in range(num_classes):
+                iou_per_class_str += 'class %s weight: %.3f, IoU: %.3f \n' % (
+                    seg_label_to_cat[l] + ' ' * (14 - len(seg_label_to_cat[l])), labelweights[l - 1],
+                    total_correct_class[l] / float(total_iou_deno_class[l]))
+
+            log_string(iou_per_class_str)
+            log_string('Eval mean loss: %f' % (loss_sum / num_batches))
+            log_string('Eval accuracy: %f' % (total_correct / float(total_seen)))
+
+            if mIoU >= best_iou:
+                best_iou = mIoU
+                log_string('Saving model....')
+                savepath = str(checkpoints_dir) + '/best_model.pth'
+                log_string('Model Saved at %s' % savepath)
+                state = {
+                    'epoch': epoch,
+                    'class_avg_iou': mIoU,
+                    'model_state_dict': classifier.state_dict(),
+                    'optimizer_state_dict': optimizer.state_dict(),
+                }
+                torch.save(state, savepath)
+                log_string('Best model saved successfully!')
+
+            log_string('Best mIoU: %f' % best_iou)
+        global_epoch += 1
 
 
 if __name__ == '__main__':
