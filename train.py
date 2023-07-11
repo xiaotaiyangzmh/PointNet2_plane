@@ -8,7 +8,6 @@ import shutil
 from pathlib import Path
 from tqdm import tqdm
 import numpy as np
-import math
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader

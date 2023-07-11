@@ -65,3 +65,62 @@
 2023-07-11 12:14:33,902 - Model - INFO - Saving model....
 2023-07-11 12:14:33,902 - Model - INFO - **** Epoch 1 (7/32) ****
 2023-07-11 12:14:33,902 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:25:14,233 - Model - INFO - PARAMETER ...
+2023-07-11 12:25:14,234 - Model - INFO - Namespace(batch_size=16, decay_rate=0.0001, epoch=32, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, train_ratio=0.9)
+2023-07-11 12:25:15,088 - Model - INFO - No existing model, starting training from scratch...
+2023-07-11 12:25:15,088 - Model - INFO - **** Epoch 1 (1/32) ****
+2023-07-11 12:25:15,088 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:25:16,273 - Model - INFO - Training mean loss: 0.867722
+2023-07-11 12:25:16,273 - Model - INFO - Training accuracy: 0.345352
+2023-07-11 12:25:16,273 - Model - INFO - Save model...
+2023-07-11 12:25:16,273 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg/checkpoints/model.pth
+2023-07-11 12:25:16,291 - Model - INFO - Saving model....
+2023-07-11 12:25:16,291 - Model - INFO - **** Epoch 1 (2/32) ****
+2023-07-11 12:25:16,291 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:25:16,653 - Model - INFO - Training mean loss: 0.676065
+2023-07-11 12:25:16,653 - Model - INFO - Training accuracy: 0.643967
+2023-07-11 12:25:16,654 - Model - INFO - **** Epoch 1 (3/32) ****
+2023-07-11 12:25:16,654 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:25:17,039 - Model - INFO - Training mean loss: 0.555732
+2023-07-11 12:25:17,039 - Model - INFO - Training accuracy: 0.855919
+2023-07-11 12:25:17,039 - Model - INFO - **** Epoch 1 (4/32) ****
+2023-07-11 12:25:17,039 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:25:17,403 - Model - INFO - Training mean loss: 0.472288
+2023-07-11 12:25:17,404 - Model - INFO - Training accuracy: 0.916069
+2023-07-11 12:25:17,404 - Model - INFO - **** Epoch 1 (5/32) ****
+2023-07-11 12:25:17,404 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:26:12,596 - Model - INFO - PARAMETER ...
+2023-07-11 12:26:12,596 - Model - INFO - Namespace(batch_size=16, decay_rate=0.0001, epoch=32, gpu='0', learning_rate=0.001, log_dir='pointnet2_sem_seg', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', step_size=10, train_ratio=0.9)
+2023-07-11 12:26:13,474 - Model - INFO - No existing model, starting training from scratch...
+2023-07-11 12:26:13,475 - Model - INFO - **** Epoch 1 (1/32) ****
+2023-07-11 12:26:13,475 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:26:14,639 - Model - INFO - Training mean loss: 0.710861
+2023-07-11 12:26:14,639 - Model - INFO - Training accuracy: 0.523453
+2023-07-11 12:26:14,639 - Model - INFO - Save model...
+2023-07-11 12:26:14,639 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg/checkpoints/model.pth
+2023-07-11 12:26:14,660 - Model - INFO - Saving model....
+2023-07-11 12:26:14,660 - Model - INFO - **** Epoch 1 (2/32) ****
+2023-07-11 12:26:14,660 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:26:15,027 - Model - INFO - Training mean loss: 0.569283
+2023-07-11 12:26:15,027 - Model - INFO - Training accuracy: 0.746941
+2023-07-11 12:26:15,027 - Model - INFO - **** Epoch 1 (3/32) ****
+2023-07-11 12:26:15,027 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:26:15,386 - Model - INFO - Training mean loss: 0.474407
+2023-07-11 12:26:15,386 - Model - INFO - Training accuracy: 0.876541
+2023-07-11 12:26:15,386 - Model - INFO - **** Epoch 1 (4/32) ****
+2023-07-11 12:26:15,386 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:26:15,745 - Model - INFO - Training mean loss: 0.396265
+2023-07-11 12:26:15,745 - Model - INFO - Training accuracy: 0.933723
+2023-07-11 12:26:15,745 - Model - INFO - **** Epoch 1 (5/32) ****
+2023-07-11 12:26:15,745 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:26:16,121 - Model - INFO - Training mean loss: 0.354988
+2023-07-11 12:26:16,121 - Model - INFO - Training accuracy: 0.934967
+2023-07-11 12:26:16,121 - Model - INFO - **** Epoch 1 (6/32) ****
+2023-07-11 12:26:16,121 - Model - INFO - Learning rate:0.001000
+2023-07-11 12:26:16,480 - Model - INFO - Training mean loss: 0.271936
+2023-07-11 12:26:16,480 - Model - INFO - Training accuracy: 0.972282
+2023-07-11 12:26:16,480 - Model - INFO - Save model...
+2023-07-11 12:26:16,480 - Model - INFO - Saving at log/sem_seg/pointnet2_sem_seg/checkpoints/model.pth
+2023-07-11 12:26:16,501 - Model - INFO - Saving model....
+2023-07-11 12:26:16,501 - Model - INFO - **** Epoch 1 (7/32) ****
+2023-07-11 12:26:16,501 - Model - INFO - Learning rate:0.001000
