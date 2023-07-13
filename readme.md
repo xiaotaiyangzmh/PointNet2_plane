@@ -45,6 +45,6 @@ python test.py  --log_dir pointnet2_sem_seg_notrans --visual
 ```
 
 ## Reference
-[charlesq34/PointNet++](https://github.com/charlesq34/pointnet2)
+[charlesq34/PointNet++](https://github.com/charlesq34/pointnet2)<br>
 [yanx27/Pointnet_Pointnet2_pytorch](https://github.com/yanx27/Pointnet_Pointnet2_pytorch)
 
