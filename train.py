@@ -8,6 +8,7 @@ import shutil
 from pathlib import Path
 from tqdm import tqdm
 import numpy as np
+import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
@@ -47,19 +48,20 @@ def bn_momentum_adjust(m, momentum):
 
 def parse_args():
     parser = argparse.ArgumentParser('Model')
-    parser.add_argument('--model', type=str, default='pointnet2_sem_seg', help='model name [default: pointnet2_sem_seg]')
+    parser.add_argument('--model', type=str, default='pointnet2_sem_seg', help='Model name [default: pointnet2_sem_seg]')
     parser.add_argument('--batch_size', type=int, default=16, help='Batch Size during training [default: 16]')
     parser.add_argument('--train_ratio', default=0.7, type=float, help='Ratio of train set [default: 0.7]')
     parser.add_argument('--epoch', default=32, type=int, help='Epoch to run [default: 32]')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='Initial learning rate [default: 0.001]')
     parser.add_argument('--gpu', type=str, default='0', help='GPU to use [default: GPU 0]')
-    parser.add_argument('--transfer', type=bool, default=True, help='Do transfer learning or not [default: True]')
+    parser.add_argument('--transfer', action="store_false", help='Do transfer learning or not [default: True]')
     parser.add_argument('--optimizer', type=str, default='Adam', help='Adam or SGD [default: Adam]')
     parser.add_argument('--log_dir', type=str, default=None, help='Log path [default: None]')
     parser.add_argument('--decay_rate', type=float, default=1e-4, help='weight decay [default: 1e-4]')
     parser.add_argument('--npoint', type=int, default=4096, help='Point Number [default: 4096]')
     parser.add_argument('--step_size', type=int, default=10, help='Decay step for lr decay [default: every 10 epochs]')
     parser.add_argument('--lr_decay', type=float, default=0.7, help='Decay rate for lr decay [default: 0.7]')
+    parser.add_argument('--plot', action="store_false", help='Plot the loss and accuracy figure [default: True]')
 
     return parser.parse_args()
 
@@ -179,6 +181,7 @@ def main(args):
 
     global_epoch = 0
     best_iou = 0
+    train_loss_list, train_acc_list, test_loss_list, test_acc_list = [], [], [], []
 
     '''Train on chopped scenes'''
     for epoch in range(start_epoch, args.epoch):
@@ -223,6 +226,8 @@ def main(args):
             loss_sum += loss
         log_string('Training mean loss: %f' % (loss_sum / num_batches))
         log_string('Training accuracy: %f' % (total_correct / float(total_seen)))
+        train_loss_list.append((loss_sum / num_batches).cpu().detach().numpy())
+        train_acc_list.append(total_correct / float(total_seen) * 100)
 
         if epoch % 5 == 0:
             log_string('Saving model....')
@@ -292,6 +297,8 @@ def main(args):
             log_string(iou_per_class_str)
             log_string('Eval mean loss: %f' % (loss_sum / num_batches))
             log_string('Eval accuracy: %f' % (total_correct / float(total_seen)))
+            test_loss_list.append((loss_sum / num_batches).cpu().detach().numpy())
+            test_acc_list.append(total_correct / float(total_seen) * 100)
 
             if mIoU >= best_iou:
                 best_iou = mIoU
@@ -310,6 +317,29 @@ def main(args):
             log_string('Best mIoU: %f' % best_iou)
         global_epoch += 1
 
+    if args.plot == True:
+        results_dir = experiment_dir.joinpath("results")
+        results_dir.mkdir(exist_ok=True)
+        
+        plt.plot(list(range(start_epoch, args.epoch)), train_loss_list, 'r--',label='train mean loss')
+        plt.plot(list(range(start_epoch, args.epoch)), test_loss_list, 'b--',label='test mean loss')
+        plt.title('Mean Loss during Training and Testing')
+        plt.xlabel('Epoch')
+        plt.ylabel('Loss')
+        plt.legend()
+        plt_savepath = results_dir.joinpath(f"Mean Loss Transfer {args.transfer}")
+        plt.savefig(plt_savepath)
+        plt.show()
+
+        plt.plot(list(range(start_epoch, args.epoch)), train_acc_list, 'g--',label='train accuracy')
+        plt.plot(list(range(start_epoch, args.epoch)), test_acc_list, 'y--',label='test accuracy')
+        plt.title('Accuracy during Training and Testing')
+        plt.xlabel('Epoch')
+        plt.ylabel('Accuracy (%)')
+        plt.legend()
+        plt_savepath = results_dir.joinpath(f"Accuracy Transfer {args.transfer}")
+        plt.savefig(plt_savepath)
+        plt.show()
 
 if __name__ == '__main__':
     args = parse_args()
