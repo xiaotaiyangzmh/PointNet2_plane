@@ -47,12 +47,13 @@ def bn_momentum_adjust(m, momentum):
 
 def parse_args():
     parser = argparse.ArgumentParser('Model')
-    parser.add_argument('--model', type=str, default='pointnet2_sem_seg', help='model name [default: pointnet_sem_seg]')
+    parser.add_argument('--model', type=str, default='pointnet2_sem_seg', help='model name [default: pointnet2_sem_seg]')
     parser.add_argument('--batch_size', type=int, default=16, help='Batch Size during training [default: 16]')
-    parser.add_argument('--train_ratio', default=0.7, type=float, help='ratio of train set')
+    parser.add_argument('--train_ratio', default=0.7, type=float, help='Ratio of train set [default: 0.7]')
     parser.add_argument('--epoch', default=32, type=int, help='Epoch to run [default: 32]')
     parser.add_argument('--learning_rate', default=0.001, type=float, help='Initial learning rate [default: 0.001]')
     parser.add_argument('--gpu', type=str, default='0', help='GPU to use [default: GPU 0]')
+    parser.add_argument('--transfer', type=bool, default=True, help='Do transfer learning or not [default: True]')
     parser.add_argument('--optimizer', type=str, default='Adam', help='Adam or SGD [default: Adam]')
     parser.add_argument('--log_dir', type=str, default=None, help='Log path [default: None]')
     parser.add_argument('--decay_rate', type=float, default=1e-4, help='weight decay [default: 1e-4]')
@@ -146,17 +147,30 @@ def main(args):
         log_string('No existing model, starting training from scratch...')
         start_epoch = 0
         classifier = classifier.apply(weights_init)
+        if args.transfer == True:
+            transfer_model = torch.load('./weights/semseg_model.pth')
+            classifier_state_dict = classifier.state_dict()
+            for key in transfer_model['model_state_dict'].keys():
+                if key in classifier_state_dict.keys():
+                    if transfer_model['model_state_dict'][key].shape == classifier_state_dict[key].shape:
+                        classifier_state_dict[key] = transfer_model['model_state_dict'][key]
+
+    if args.transfer == True:
+        require_grad_layer = ["sa1", "conv2"]
+        for param in classifier.named_parameters():
+            if param[0][:3] in require_grad_layer or param[0][:5] in require_grad_layer:
+                param[1].requires_grad = True
+            else:
+                param[1].requires_grad = False
+        grad_params = [p for p in classifier.parameters() if p.requires_grad]
+    else:
+        grad_params = [p for p in classifier.parameters()]
 
     if args.optimizer == 'Adam':
-        optimizer = torch.optim.Adam(
-            classifier.parameters(),
-            lr=args.learning_rate,
-            betas=(0.9, 0.999),
-            eps=1e-08,
-            weight_decay=args.decay_rate
-        )
+        optimizer = torch.optim.Adam(grad_params,
+            lr=args.learning_rate, betas=(0.9, 0.999), eps=1e-08, weight_decay=args.decay_rate)
     else:
-        optimizer = torch.optim.SGD(classifier.parameters(), lr=args.learning_rate, momentum=0.9)
+        optimizer = torch.optim.SGD(grad_params, lr=args.learning_rate, momentum=0.9)
 
     LEARNING_RATE_CLIP = 1e-5
     MOMENTUM_ORIGINAL = 0.1
@@ -186,8 +200,6 @@ def main(args):
 
         for i, (points, target) in tqdm(enumerate(train_loader), total=len(train_loader), smoothing=0.9):
             optimizer.zero_grad()
-            # points.shape == [16, 4096, 9]
-            # target.shape == [16, 4096]
 
             points = points.data.numpy()
             points[:, :, :3] = provider.rotate_point_cloud_z(points[:, :, :3])
@@ -196,16 +208,11 @@ def main(args):
             points = points.transpose(2, 1)
 
             seg_pred, trans_feat = classifier(points)
-            # seg_pred.shape = [16, 4096, 13]
             seg_pred = seg_pred.contiguous().view(-1, num_classes)
 
             batch_label = target.view(-1, 1)[:, 0].cpu().data.numpy()
             target = target.view(-1, 1)[:, 0]
             loss = criterion(seg_pred, target, trans_feat, weights)
-            # seg_pred.shape == [65536, 13]
-            # target.shape == [65536]
-            # weights.shape == [13]
-            # trans_feat.shape == [16, 512, 16]
             loss.backward()
             optimizer.step()
 
