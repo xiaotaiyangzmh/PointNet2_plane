@@ -1,0 +1,568 @@
+2023-07-13 16:30:30,952 - Model - INFO - PARAMETER ...
+2023-07-13 16:30:30,952 - Model - INFO - Namespace(batch_size=16, decay_rate=0.0001, epoch=32, gpu='0', learning_rate=0.001, log_dir=None, lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', plot=True, step_size=10, train_ratio=0.7, transfer=True)
+2023-07-13 16:30:30,980 - Model - INFO - using cuda:0 device.
+2023-07-13 16:30:30,980 - Model - INFO - start loading training data ...
+2023-07-13 16:30:31,548 - Model - INFO - using 88 samples for training.
+2023-07-13 16:30:32,092 - Model - INFO - start loading testing data ...
+2023-07-13 16:30:32,330 - Model - INFO - using 36 samples for testing.
+2023-07-13 16:30:32,359 - Model - INFO - No existing model, starting training from scratch...
+2023-07-13 16:30:32,372 - Model - INFO - **** Epoch 1 (1/32) ****
+2023-07-13 16:30:32,372 - Model - INFO - Learning rate:0.001000
+2023-07-13 16:30:34,067 - Model - INFO - Training mean loss: 0.845382
+2023-07-13 16:30:34,067 - Model - INFO - Training accuracy: 0.389139
+2023-07-13 16:30:34,067 - Model - INFO - Saving model....
+2023-07-13 16:30:34,067 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/model.pth
+2023-07-13 16:30:34,074 - Model - INFO - Model saved successfully!
+2023-07-13 16:30:34,074 - Model - INFO - ---- EPOCH 001 EVALUATION ----
+2023-07-13 16:30:34,383 - Model - INFO - eval mean loss: 0.713997
+2023-07-13 16:30:34,383 - Model - INFO - eval point avg class IoU: 0.052540
+2023-07-13 16:30:34,383 - Model - INFO - eval point accuracy: 0.105080
+2023-07-13 16:30:34,383 - Model - INFO - eval point avg class acc: 0.500000
+2023-07-13 16:30:34,383 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.895, IoU: 0.105 
+class plane          weight: 0.105, IoU: 0.000 
+
+2023-07-13 16:30:34,383 - Model - INFO - Eval mean loss: 0.713997
+2023-07-13 16:30:34,383 - Model - INFO - Eval accuracy: 0.105080
+2023-07-13 16:30:34,383 - Model - INFO - Saving model....
+2023-07-13 16:30:34,383 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/best_model.pth
+2023-07-13 16:30:34,390 - Model - INFO - Best model saved successfully!
+2023-07-13 16:30:34,390 - Model - INFO - Best mIoU: 0.052540
+2023-07-13 16:30:34,390 - Model - INFO - **** Epoch 2 (2/32) ****
+2023-07-13 16:30:34,390 - Model - INFO - Learning rate:0.001000
+2023-07-13 16:30:35,266 - Model - INFO - Training mean loss: 0.696167
+2023-07-13 16:30:35,266 - Model - INFO - Training accuracy: 0.599063
+2023-07-13 16:30:35,267 - Model - INFO - ---- EPOCH 002 EVALUATION ----
+2023-07-13 16:30:35,574 - Model - INFO - eval mean loss: 0.677997
+2023-07-13 16:30:35,574 - Model - INFO - eval point avg class IoU: 0.452290
+2023-07-13 16:30:35,574 - Model - INFO - eval point accuracy: 0.904579
+2023-07-13 16:30:35,574 - Model - INFO - eval point avg class acc: 0.500000
+2023-07-13 16:30:35,574 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.905, IoU: 0.000 
+class plane          weight: 0.095, IoU: 0.905 
+
+2023-07-13 16:30:35,574 - Model - INFO - Eval mean loss: 0.677997
+2023-07-13 16:30:35,574 - Model - INFO - Eval accuracy: 0.904579
+2023-07-13 16:30:35,574 - Model - INFO - Saving model....
+2023-07-13 16:30:35,574 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/best_model.pth
+2023-07-13 16:30:35,582 - Model - INFO - Best model saved successfully!
+2023-07-13 16:30:35,582 - Model - INFO - Best mIoU: 0.452290
+2023-07-13 16:30:35,582 - Model - INFO - **** Epoch 3 (3/32) ****
+2023-07-13 16:30:35,582 - Model - INFO - Learning rate:0.001000
+2023-07-13 16:30:36,474 - Model - INFO - Training mean loss: 0.614964
+2023-07-13 16:30:36,474 - Model - INFO - Training accuracy: 0.742102
+2023-07-13 16:30:36,474 - Model - INFO - ---- EPOCH 003 EVALUATION ----
+2023-07-13 16:30:36,781 - Model - INFO - eval mean loss: 0.629822
+2023-07-13 16:30:36,781 - Model - INFO - eval point avg class IoU: 0.456532
+2023-07-13 16:30:36,781 - Model - INFO - eval point accuracy: 0.913063
+2023-07-13 16:30:36,781 - Model - INFO - eval point avg class acc: 0.500000
+2023-07-13 16:30:36,781 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.913, IoU: 0.000 
+class plane          weight: 0.087, IoU: 0.913 
+
+2023-07-13 16:30:36,781 - Model - INFO - Eval mean loss: 0.629822
+2023-07-13 16:30:36,781 - Model - INFO - Eval accuracy: 0.913063
+2023-07-13 16:30:36,781 - Model - INFO - Saving model....
+2023-07-13 16:30:36,781 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/best_model.pth
+2023-07-13 16:30:36,788 - Model - INFO - Best model saved successfully!
+2023-07-13 16:30:36,788 - Model - INFO - Best mIoU: 0.456532
+2023-07-13 16:30:36,788 - Model - INFO - **** Epoch 4 (4/32) ****
+2023-07-13 16:30:36,789 - Model - INFO - Learning rate:0.001000
+2023-07-13 16:30:37,659 - Model - INFO - Training mean loss: 0.533019
+2023-07-13 16:30:37,660 - Model - INFO - Training accuracy: 0.840805
+2023-07-13 16:30:37,660 - Model - INFO - ---- EPOCH 004 EVALUATION ----
+2023-07-13 16:30:37,964 - Model - INFO - eval mean loss: 0.587161
+2023-07-13 16:30:37,964 - Model - INFO - eval point avg class IoU: 0.442646
+2023-07-13 16:30:37,964 - Model - INFO - eval point accuracy: 0.885292
+2023-07-13 16:30:37,964 - Model - INFO - eval point avg class acc: 0.500000
+2023-07-13 16:30:37,964 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.885, IoU: 0.000 
+class plane          weight: 0.115, IoU: 0.885 
+
+2023-07-13 16:30:37,964 - Model - INFO - Eval mean loss: 0.587161
+2023-07-13 16:30:37,964 - Model - INFO - Eval accuracy: 0.885292
+2023-07-13 16:30:37,964 - Model - INFO - Best mIoU: 0.456532
+2023-07-13 16:30:37,964 - Model - INFO - **** Epoch 5 (5/32) ****
+2023-07-13 16:30:37,964 - Model - INFO - Learning rate:0.001000
+2023-07-13 16:30:38,841 - Model - INFO - Training mean loss: 0.509965
+2023-07-13 16:30:38,841 - Model - INFO - Training accuracy: 0.879514
+2023-07-13 16:30:38,841 - Model - INFO - ---- EPOCH 005 EVALUATION ----
+2023-07-13 16:30:39,147 - Model - INFO - eval mean loss: 0.530209
+2023-07-13 16:30:39,147 - Model - INFO - eval point avg class IoU: 0.451691
+2023-07-13 16:30:39,147 - Model - INFO - eval point accuracy: 0.903381
+2023-07-13 16:30:39,147 - Model - INFO - eval point avg class acc: 0.500000
+2023-07-13 16:30:39,147 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.903, IoU: 0.000 
+class plane          weight: 0.097, IoU: 0.903 
+
+2023-07-13 16:30:39,147 - Model - INFO - Eval mean loss: 0.530209
+2023-07-13 16:30:39,147 - Model - INFO - Eval accuracy: 0.903381
+2023-07-13 16:30:39,147 - Model - INFO - Best mIoU: 0.456532
+2023-07-13 16:30:39,147 - Model - INFO - **** Epoch 6 (6/32) ****
+2023-07-13 16:30:39,147 - Model - INFO - Learning rate:0.001000
+2023-07-13 16:30:40,027 - Model - INFO - Training mean loss: 0.487392
+2023-07-13 16:30:40,027 - Model - INFO - Training accuracy: 0.897623
+2023-07-13 16:30:40,027 - Model - INFO - Saving model....
+2023-07-13 16:30:40,028 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/model.pth
+2023-07-13 16:30:40,035 - Model - INFO - Model saved successfully!
+2023-07-13 16:30:40,035 - Model - INFO - ---- EPOCH 006 EVALUATION ----
+2023-07-13 16:30:40,341 - Model - INFO - eval mean loss: 0.460216
+2023-07-13 16:30:40,341 - Model - INFO - eval point avg class IoU: 0.463219
+2023-07-13 16:30:40,341 - Model - INFO - eval point accuracy: 0.926437
+2023-07-13 16:30:40,341 - Model - INFO - eval point avg class acc: 0.500000
+2023-07-13 16:30:40,341 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.926, IoU: 0.000 
+class plane          weight: 0.074, IoU: 0.926 
+
+2023-07-13 16:30:40,341 - Model - INFO - Eval mean loss: 0.460216
+2023-07-13 16:30:40,341 - Model - INFO - Eval accuracy: 0.926437
+2023-07-13 16:30:40,341 - Model - INFO - Saving model....
+2023-07-13 16:30:40,341 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/best_model.pth
+2023-07-13 16:30:40,349 - Model - INFO - Best model saved successfully!
+2023-07-13 16:30:40,349 - Model - INFO - Best mIoU: 0.463219
+2023-07-13 16:30:40,349 - Model - INFO - **** Epoch 7 (7/32) ****
+2023-07-13 16:30:40,349 - Model - INFO - Learning rate:0.001000
+2023-07-13 16:30:41,228 - Model - INFO - Training mean loss: 0.515528
+2023-07-13 16:30:41,228 - Model - INFO - Training accuracy: 0.889029
+2023-07-13 16:30:41,229 - Model - INFO - ---- EPOCH 007 EVALUATION ----
+2023-07-13 16:30:41,535 - Model - INFO - eval mean loss: 0.453929
+2023-07-13 16:30:41,535 - Model - INFO - eval point avg class IoU: 0.448608
+2023-07-13 16:30:41,535 - Model - INFO - eval point accuracy: 0.897217
+2023-07-13 16:30:41,535 - Model - INFO - eval point avg class acc: 0.500000
+2023-07-13 16:30:41,535 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.897, IoU: 0.000 
+class plane          weight: 0.103, IoU: 0.897 
+
+2023-07-13 16:30:41,535 - Model - INFO - Eval mean loss: 0.453929
+2023-07-13 16:30:41,535 - Model - INFO - Eval accuracy: 0.897217
+2023-07-13 16:30:41,535 - Model - INFO - Best mIoU: 0.463219
+2023-07-13 16:30:41,535 - Model - INFO - **** Epoch 8 (8/32) ****
+2023-07-13 16:30:41,535 - Model - INFO - Learning rate:0.001000
+2023-07-13 16:30:42,445 - Model - INFO - Training mean loss: 0.495287
+2023-07-13 16:30:42,445 - Model - INFO - Training accuracy: 0.892529
+2023-07-13 16:30:42,445 - Model - INFO - ---- EPOCH 008 EVALUATION ----
+2023-07-13 16:30:42,760 - Model - INFO - eval mean loss: 0.385229
+2023-07-13 16:30:42,760 - Model - INFO - eval point avg class IoU: 0.462776
+2023-07-13 16:30:42,760 - Model - INFO - eval point accuracy: 0.925552
+2023-07-13 16:30:42,760 - Model - INFO - eval point avg class acc: 0.500000
+2023-07-13 16:30:42,760 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.926, IoU: 0.000 
+class plane          weight: 0.074, IoU: 0.926 
+
+2023-07-13 16:30:42,760 - Model - INFO - Eval mean loss: 0.385229
+2023-07-13 16:30:42,760 - Model - INFO - Eval accuracy: 0.925552
+2023-07-13 16:30:42,760 - Model - INFO - Best mIoU: 0.463219
+2023-07-13 16:30:42,760 - Model - INFO - **** Epoch 9 (9/32) ****
+2023-07-13 16:30:42,760 - Model - INFO - Learning rate:0.001000
+2023-07-13 16:30:43,676 - Model - INFO - Training mean loss: 0.510903
+2023-07-13 16:30:43,676 - Model - INFO - Training accuracy: 0.885013
+2023-07-13 16:30:43,677 - Model - INFO - ---- EPOCH 009 EVALUATION ----
+2023-07-13 16:30:44,009 - Model - INFO - eval mean loss: 0.411283
+2023-07-13 16:30:44,009 - Model - INFO - eval point avg class IoU: 0.455875
+2023-07-13 16:30:44,009 - Model - INFO - eval point accuracy: 0.911751
+2023-07-13 16:30:44,009 - Model - INFO - eval point avg class acc: 0.500000
+2023-07-13 16:30:44,009 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.912, IoU: 0.000 
+class plane          weight: 0.088, IoU: 0.912 
+
+2023-07-13 16:30:44,009 - Model - INFO - Eval mean loss: 0.411283
+2023-07-13 16:30:44,009 - Model - INFO - Eval accuracy: 0.911751
+2023-07-13 16:30:44,010 - Model - INFO - Best mIoU: 0.463219
+2023-07-13 16:30:44,010 - Model - INFO - **** Epoch 10 (10/32) ****
+2023-07-13 16:30:44,010 - Model - INFO - Learning rate:0.001000
+2023-07-13 16:30:44,927 - Model - INFO - Training mean loss: 0.379809
+2023-07-13 16:30:44,928 - Model - INFO - Training accuracy: 0.927930
+2023-07-13 16:30:44,928 - Model - INFO - ---- EPOCH 010 EVALUATION ----
+2023-07-13 16:30:45,235 - Model - INFO - eval mean loss: 0.405509
+2023-07-13 16:30:45,235 - Model - INFO - eval point avg class IoU: 0.454894
+2023-07-13 16:30:45,235 - Model - INFO - eval point accuracy: 0.909454
+2023-07-13 16:30:45,235 - Model - INFO - eval point avg class acc: 0.500127
+2023-07-13 16:30:45,235 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.910, IoU: 0.000 
+class plane          weight: 0.090, IoU: 0.909 
+
+2023-07-13 16:30:45,235 - Model - INFO - Eval mean loss: 0.405509
+2023-07-13 16:30:45,235 - Model - INFO - Eval accuracy: 0.909454
+2023-07-13 16:30:45,235 - Model - INFO - Best mIoU: 0.463219
+2023-07-13 16:30:45,235 - Model - INFO - **** Epoch 11 (11/32) ****
+2023-07-13 16:30:45,235 - Model - INFO - Learning rate:0.000700
+2023-07-13 16:30:46,148 - Model - INFO - Training mean loss: 0.481145
+2023-07-13 16:30:46,148 - Model - INFO - Training accuracy: 0.884143
+2023-07-13 16:30:46,148 - Model - INFO - Saving model....
+2023-07-13 16:30:46,148 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/model.pth
+2023-07-13 16:30:46,156 - Model - INFO - Model saved successfully!
+2023-07-13 16:30:46,156 - Model - INFO - ---- EPOCH 011 EVALUATION ----
+2023-07-13 16:30:46,475 - Model - INFO - eval mean loss: 0.409013
+2023-07-13 16:30:46,475 - Model - INFO - eval point avg class IoU: 0.455707
+2023-07-13 16:30:46,475 - Model - INFO - eval point accuracy: 0.905083
+2023-07-13 16:30:46,475 - Model - INFO - eval point avg class acc: 0.501670
+2023-07-13 16:30:46,475 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.907, IoU: 0.006 
+class plane          weight: 0.093, IoU: 0.905 
+
+2023-07-13 16:30:46,475 - Model - INFO - Eval mean loss: 0.409013
+2023-07-13 16:30:46,475 - Model - INFO - Eval accuracy: 0.905083
+2023-07-13 16:30:46,475 - Model - INFO - Best mIoU: 0.463219
+2023-07-13 16:30:46,475 - Model - INFO - **** Epoch 12 (12/32) ****
+2023-07-13 16:30:46,475 - Model - INFO - Learning rate:0.000700
+2023-07-13 16:30:47,371 - Model - INFO - Training mean loss: 0.377012
+2023-07-13 16:30:47,371 - Model - INFO - Training accuracy: 0.929910
+2023-07-13 16:30:47,372 - Model - INFO - ---- EPOCH 012 EVALUATION ----
+2023-07-13 16:30:47,692 - Model - INFO - eval mean loss: 0.455341
+2023-07-13 16:30:47,692 - Model - INFO - eval point avg class IoU: 0.445723
+2023-07-13 16:30:47,692 - Model - INFO - eval point accuracy: 0.882210
+2023-07-13 16:30:47,692 - Model - INFO - eval point avg class acc: 0.504559
+2023-07-13 16:30:47,692 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.881, IoU: 0.009 
+class plane          weight: 0.119, IoU: 0.882 
+
+2023-07-13 16:30:47,692 - Model - INFO - Eval mean loss: 0.455341
+2023-07-13 16:30:47,692 - Model - INFO - Eval accuracy: 0.882210
+2023-07-13 16:30:47,692 - Model - INFO - Best mIoU: 0.463219
+2023-07-13 16:30:47,692 - Model - INFO - **** Epoch 13 (13/32) ****
+2023-07-13 16:30:47,692 - Model - INFO - Learning rate:0.000700
+2023-07-13 16:30:48,601 - Model - INFO - Training mean loss: 0.363543
+2023-07-13 16:30:48,601 - Model - INFO - Training accuracy: 0.933783
+2023-07-13 16:30:48,601 - Model - INFO - ---- EPOCH 013 EVALUATION ----
+2023-07-13 16:30:48,907 - Model - INFO - eval mean loss: 0.459266
+2023-07-13 16:30:48,907 - Model - INFO - eval point avg class IoU: 0.450937
+2023-07-13 16:30:48,907 - Model - INFO - eval point accuracy: 0.897827
+2023-07-13 16:30:48,907 - Model - INFO - eval point avg class acc: 0.502045
+2023-07-13 16:30:48,907 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.897, IoU: 0.004 
+class plane          weight: 0.103, IoU: 0.898 
+
+2023-07-13 16:30:48,907 - Model - INFO - Eval mean loss: 0.459266
+2023-07-13 16:30:48,907 - Model - INFO - Eval accuracy: 0.897827
+2023-07-13 16:30:48,907 - Model - INFO - Best mIoU: 0.463219
+2023-07-13 16:30:48,907 - Model - INFO - **** Epoch 14 (14/32) ****
+2023-07-13 16:30:48,907 - Model - INFO - Learning rate:0.000700
+2023-07-13 16:30:49,809 - Model - INFO - Training mean loss: 0.489052
+2023-07-13 16:30:49,809 - Model - INFO - Training accuracy: 0.878079
+2023-07-13 16:30:49,810 - Model - INFO - ---- EPOCH 014 EVALUATION ----
+2023-07-13 16:30:50,144 - Model - INFO - eval mean loss: 0.361259
+2023-07-13 16:30:50,144 - Model - INFO - eval point avg class IoU: 0.460186
+2023-07-13 16:30:50,144 - Model - INFO - eval point accuracy: 0.920372
+2023-07-13 16:30:50,144 - Model - INFO - eval point avg class acc: 0.500000
+2023-07-13 16:30:50,144 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.920, IoU: 0.000 
+class plane          weight: 0.080, IoU: 0.920 
+
+2023-07-13 16:30:50,144 - Model - INFO - Eval mean loss: 0.361259
+2023-07-13 16:30:50,144 - Model - INFO - Eval accuracy: 0.920372
+2023-07-13 16:30:50,144 - Model - INFO - Best mIoU: 0.463219
+2023-07-13 16:30:50,144 - Model - INFO - **** Epoch 15 (15/32) ****
+2023-07-13 16:30:50,144 - Model - INFO - Learning rate:0.000700
+2023-07-13 16:30:51,045 - Model - INFO - Training mean loss: 0.450173
+2023-07-13 16:30:51,045 - Model - INFO - Training accuracy: 0.892160
+2023-07-13 16:30:51,045 - Model - INFO - ---- EPOCH 015 EVALUATION ----
+2023-07-13 16:30:51,379 - Model - INFO - eval mean loss: 0.401480
+2023-07-13 16:30:51,379 - Model - INFO - eval point avg class IoU: 0.459326
+2023-07-13 16:30:51,379 - Model - INFO - eval point accuracy: 0.913513
+2023-07-13 16:30:51,379 - Model - INFO - eval point avg class acc: 0.502589
+2023-07-13 16:30:51,379 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.913, IoU: 0.005 
+class plane          weight: 0.087, IoU: 0.913 
+
+2023-07-13 16:30:51,379 - Model - INFO - Eval mean loss: 0.401480
+2023-07-13 16:30:51,379 - Model - INFO - Eval accuracy: 0.913513
+2023-07-13 16:30:51,379 - Model - INFO - Best mIoU: 0.463219
+2023-07-13 16:30:51,379 - Model - INFO - **** Epoch 16 (16/32) ****
+2023-07-13 16:30:51,379 - Model - INFO - Learning rate:0.000700
+2023-07-13 16:30:52,262 - Model - INFO - Training mean loss: 0.439242
+2023-07-13 16:30:52,262 - Model - INFO - Training accuracy: 0.894711
+2023-07-13 16:30:52,263 - Model - INFO - Saving model....
+2023-07-13 16:30:52,263 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/model.pth
+2023-07-13 16:30:52,270 - Model - INFO - Model saved successfully!
+2023-07-13 16:30:52,270 - Model - INFO - ---- EPOCH 016 EVALUATION ----
+2023-07-13 16:30:52,575 - Model - INFO - eval mean loss: 0.453659
+2023-07-13 16:30:52,575 - Model - INFO - eval point avg class IoU: 0.439393
+2023-07-13 16:30:52,575 - Model - INFO - eval point accuracy: 0.873589
+2023-07-13 16:30:52,575 - Model - INFO - eval point avg class acc: 0.501898
+2023-07-13 16:30:52,575 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.874, IoU: 0.005 
+class plane          weight: 0.126, IoU: 0.874 
+
+2023-07-13 16:30:52,575 - Model - INFO - Eval mean loss: 0.453659
+2023-07-13 16:30:52,575 - Model - INFO - Eval accuracy: 0.873589
+2023-07-13 16:30:52,575 - Model - INFO - Best mIoU: 0.463219
+2023-07-13 16:30:52,575 - Model - INFO - **** Epoch 17 (17/32) ****
+2023-07-13 16:30:52,575 - Model - INFO - Learning rate:0.000700
+2023-07-13 16:30:53,509 - Model - INFO - Training mean loss: 0.499882
+2023-07-13 16:30:53,509 - Model - INFO - Training accuracy: 0.860498
+2023-07-13 16:30:53,510 - Model - INFO - ---- EPOCH 017 EVALUATION ----
+2023-07-13 16:30:53,866 - Model - INFO - eval mean loss: 0.357695
+2023-07-13 16:30:53,866 - Model - INFO - eval point avg class IoU: 0.467069
+2023-07-13 16:30:53,866 - Model - INFO - eval point accuracy: 0.927391
+2023-07-13 16:30:53,866 - Model - INFO - eval point avg class acc: 0.501514
+2023-07-13 16:30:53,866 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.931, IoU: 0.007 
+class plane          weight: 0.069, IoU: 0.927 
+
+2023-07-13 16:30:53,866 - Model - INFO - Eval mean loss: 0.357695
+2023-07-13 16:30:53,866 - Model - INFO - Eval accuracy: 0.927391
+2023-07-13 16:30:53,867 - Model - INFO - Saving model....
+2023-07-13 16:30:53,867 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/best_model.pth
+2023-07-13 16:30:53,874 - Model - INFO - Best model saved successfully!
+2023-07-13 16:30:53,874 - Model - INFO - Best mIoU: 0.467069
+2023-07-13 16:30:53,874 - Model - INFO - **** Epoch 18 (18/32) ****
+2023-07-13 16:30:53,874 - Model - INFO - Learning rate:0.000700
+2023-07-13 16:30:54,815 - Model - INFO - Training mean loss: 0.385369
+2023-07-13 16:30:54,815 - Model - INFO - Training accuracy: 0.910086
+2023-07-13 16:30:54,816 - Model - INFO - ---- EPOCH 018 EVALUATION ----
+2023-07-13 16:30:55,146 - Model - INFO - eval mean loss: 0.367815
+2023-07-13 16:30:55,146 - Model - INFO - eval point avg class IoU: 0.467123
+2023-07-13 16:30:55,146 - Model - INFO - eval point accuracy: 0.917831
+2023-07-13 16:30:55,146 - Model - INFO - eval point avg class acc: 0.505536
+2023-07-13 16:30:55,146 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.923, IoU: 0.017 
+class plane          weight: 0.077, IoU: 0.918 
+
+2023-07-13 16:30:55,146 - Model - INFO - Eval mean loss: 0.367815
+2023-07-13 16:30:55,146 - Model - INFO - Eval accuracy: 0.917831
+2023-07-13 16:30:55,146 - Model - INFO - Saving model....
+2023-07-13 16:30:55,146 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/best_model.pth
+2023-07-13 16:30:55,153 - Model - INFO - Best model saved successfully!
+2023-07-13 16:30:55,153 - Model - INFO - Best mIoU: 0.467123
+2023-07-13 16:30:55,154 - Model - INFO - **** Epoch 19 (19/32) ****
+2023-07-13 16:30:55,154 - Model - INFO - Learning rate:0.000700
+2023-07-13 16:30:56,049 - Model - INFO - Training mean loss: 0.382075
+2023-07-13 16:30:56,049 - Model - INFO - Training accuracy: 0.909052
+2023-07-13 16:30:56,050 - Model - INFO - ---- EPOCH 019 EVALUATION ----
+2023-07-13 16:30:56,355 - Model - INFO - eval mean loss: 0.336580
+2023-07-13 16:30:56,355 - Model - INFO - eval point avg class IoU: 0.469395
+2023-07-13 16:30:56,355 - Model - INFO - eval point accuracy: 0.930840
+2023-07-13 16:30:56,355 - Model - INFO - eval point avg class acc: 0.500453
+2023-07-13 16:30:56,355 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.938, IoU: 0.008 
+class plane          weight: 0.062, IoU: 0.931 
+
+2023-07-13 16:30:56,355 - Model - INFO - Eval mean loss: 0.336580
+2023-07-13 16:30:56,355 - Model - INFO - Eval accuracy: 0.930840
+2023-07-13 16:30:56,355 - Model - INFO - Saving model....
+2023-07-13 16:30:56,355 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/best_model.pth
+2023-07-13 16:30:56,363 - Model - INFO - Best model saved successfully!
+2023-07-13 16:30:56,363 - Model - INFO - Best mIoU: 0.469395
+2023-07-13 16:30:56,363 - Model - INFO - **** Epoch 20 (20/32) ****
+2023-07-13 16:30:56,363 - Model - INFO - Learning rate:0.000700
+2023-07-13 16:30:57,242 - Model - INFO - Training mean loss: 0.467850
+2023-07-13 16:30:57,242 - Model - INFO - Training accuracy: 0.869067
+2023-07-13 16:30:57,242 - Model - INFO - ---- EPOCH 020 EVALUATION ----
+2023-07-13 16:30:57,556 - Model - INFO - eval mean loss: 0.395577
+2023-07-13 16:30:57,556 - Model - INFO - eval point avg class IoU: 0.480677
+2023-07-13 16:30:57,556 - Model - INFO - eval point accuracy: 0.898621
+2023-07-13 16:30:57,556 - Model - INFO - eval point avg class acc: 0.530076
+2023-07-13 16:30:57,556 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.898, IoU: 0.063 
+class plane          weight: 0.102, IoU: 0.898 
+
+2023-07-13 16:30:57,556 - Model - INFO - Eval mean loss: 0.395577
+2023-07-13 16:30:57,556 - Model - INFO - Eval accuracy: 0.898621
+2023-07-13 16:30:57,557 - Model - INFO - Saving model....
+2023-07-13 16:30:57,557 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/best_model.pth
+2023-07-13 16:30:57,564 - Model - INFO - Best model saved successfully!
+2023-07-13 16:30:57,564 - Model - INFO - Best mIoU: 0.480677
+2023-07-13 16:30:57,565 - Model - INFO - **** Epoch 21 (21/32) ****
+2023-07-13 16:30:57,565 - Model - INFO - Learning rate:0.000490
+2023-07-13 16:30:58,441 - Model - INFO - Training mean loss: 0.410949
+2023-07-13 16:30:58,441 - Model - INFO - Training accuracy: 0.895718
+2023-07-13 16:30:58,441 - Model - INFO - Saving model....
+2023-07-13 16:30:58,441 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/model.pth
+2023-07-13 16:30:58,449 - Model - INFO - Model saved successfully!
+2023-07-13 16:30:58,449 - Model - INFO - ---- EPOCH 021 EVALUATION ----
+2023-07-13 16:30:58,753 - Model - INFO - eval mean loss: 0.382637
+2023-07-13 16:30:58,753 - Model - INFO - eval point avg class IoU: 0.479731
+2023-07-13 16:30:58,753 - Model - INFO - eval point accuracy: 0.903267
+2023-07-13 16:30:58,753 - Model - INFO - eval point avg class acc: 0.526444
+2023-07-13 16:30:58,753 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.905, IoU: 0.057 
+class plane          weight: 0.095, IoU: 0.903 
+
+2023-07-13 16:30:58,753 - Model - INFO - Eval mean loss: 0.382637
+2023-07-13 16:30:58,753 - Model - INFO - Eval accuracy: 0.903267
+2023-07-13 16:30:58,753 - Model - INFO - Best mIoU: 0.480677
+2023-07-13 16:30:58,753 - Model - INFO - **** Epoch 22 (22/32) ****
+2023-07-13 16:30:58,753 - Model - INFO - Learning rate:0.000490
+2023-07-13 16:30:59,655 - Model - INFO - Training mean loss: 0.398177
+2023-07-13 16:30:59,655 - Model - INFO - Training accuracy: 0.898376
+2023-07-13 16:30:59,656 - Model - INFO - ---- EPOCH 022 EVALUATION ----
+2023-07-13 16:30:59,984 - Model - INFO - eval mean loss: 0.437483
+2023-07-13 16:30:59,984 - Model - INFO - eval point avg class IoU: 0.462451
+2023-07-13 16:30:59,984 - Model - INFO - eval point accuracy: 0.891289
+2023-07-13 16:30:59,984 - Model - INFO - eval point avg class acc: 0.513008
+2023-07-13 16:30:59,984 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.898, IoU: 0.034 
+class plane          weight: 0.102, IoU: 0.891 
+
+2023-07-13 16:30:59,984 - Model - INFO - Eval mean loss: 0.437483
+2023-07-13 16:30:59,984 - Model - INFO - Eval accuracy: 0.891289
+2023-07-13 16:30:59,984 - Model - INFO - Best mIoU: 0.480677
+2023-07-13 16:30:59,984 - Model - INFO - **** Epoch 23 (23/32) ****
+2023-07-13 16:30:59,984 - Model - INFO - Learning rate:0.000490
+2023-07-13 16:31:00,894 - Model - INFO - Training mean loss: 0.407369
+2023-07-13 16:31:00,894 - Model - INFO - Training accuracy: 0.896036
+2023-07-13 16:31:00,894 - Model - INFO - ---- EPOCH 023 EVALUATION ----
+2023-07-13 16:31:01,222 - Model - INFO - eval mean loss: 0.344997
+2023-07-13 16:31:01,222 - Model - INFO - eval point avg class IoU: 0.499597
+2023-07-13 16:31:01,222 - Model - INFO - eval point accuracy: 0.917656
+2023-07-13 16:31:01,222 - Model - INFO - eval point avg class acc: 0.540914
+2023-07-13 16:31:01,222 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.922, IoU: 0.082 
+class plane          weight: 0.078, IoU: 0.917 
+
+2023-07-13 16:31:01,222 - Model - INFO - Eval mean loss: 0.344997
+2023-07-13 16:31:01,222 - Model - INFO - Eval accuracy: 0.917656
+2023-07-13 16:31:01,222 - Model - INFO - Saving model....
+2023-07-13 16:31:01,222 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/best_model.pth
+2023-07-13 16:31:01,230 - Model - INFO - Best model saved successfully!
+2023-07-13 16:31:01,230 - Model - INFO - Best mIoU: 0.499597
+2023-07-13 16:31:01,230 - Model - INFO - **** Epoch 24 (24/32) ****
+2023-07-13 16:31:01,230 - Model - INFO - Learning rate:0.000490
+2023-07-13 16:31:02,171 - Model - INFO - Training mean loss: 0.358425
+2023-07-13 16:31:02,171 - Model - INFO - Training accuracy: 0.916772
+2023-07-13 16:31:02,171 - Model - INFO - ---- EPOCH 024 EVALUATION ----
+2023-07-13 16:31:02,483 - Model - INFO - eval mean loss: 0.390470
+2023-07-13 16:31:02,484 - Model - INFO - eval point avg class IoU: 0.465902
+2023-07-13 16:31:02,484 - Model - INFO - eval point accuracy: 0.903336
+2023-07-13 16:31:02,484 - Model - INFO - eval point avg class acc: 0.511449
+2023-07-13 16:31:02,484 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.908, IoU: 0.029 
+class plane          weight: 0.092, IoU: 0.903 
+
+2023-07-13 16:31:02,484 - Model - INFO - Eval mean loss: 0.390470
+2023-07-13 16:31:02,484 - Model - INFO - Eval accuracy: 0.903336
+2023-07-13 16:31:02,484 - Model - INFO - Best mIoU: 0.499597
+2023-07-13 16:31:02,484 - Model - INFO - **** Epoch 25 (25/32) ****
+2023-07-13 16:31:02,484 - Model - INFO - Learning rate:0.000490
+2023-07-13 16:31:03,356 - Model - INFO - Training mean loss: 0.413506
+2023-07-13 16:31:03,356 - Model - INFO - Training accuracy: 0.889725
+2023-07-13 16:31:03,357 - Model - INFO - ---- EPOCH 025 EVALUATION ----
+2023-07-13 16:31:03,660 - Model - INFO - eval mean loss: 0.411228
+2023-07-13 16:31:03,660 - Model - INFO - eval point avg class IoU: 0.480313
+2023-07-13 16:31:03,660 - Model - INFO - eval point accuracy: 0.882301
+2023-07-13 16:31:03,660 - Model - INFO - eval point avg class acc: 0.537264
+2023-07-13 16:31:03,660 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.883, IoU: 0.080 
+class plane          weight: 0.117, IoU: 0.881 
+
+2023-07-13 16:31:03,660 - Model - INFO - Eval mean loss: 0.411228
+2023-07-13 16:31:03,660 - Model - INFO - Eval accuracy: 0.882301
+2023-07-13 16:31:03,660 - Model - INFO - Best mIoU: 0.499597
+2023-07-13 16:31:03,660 - Model - INFO - **** Epoch 26 (26/32) ****
+2023-07-13 16:31:03,660 - Model - INFO - Learning rate:0.000490
+2023-07-13 16:31:04,530 - Model - INFO - Training mean loss: 0.397868
+2023-07-13 16:31:04,530 - Model - INFO - Training accuracy: 0.902377
+2023-07-13 16:31:04,530 - Model - INFO - Saving model....
+2023-07-13 16:31:04,530 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/model.pth
+2023-07-13 16:31:04,538 - Model - INFO - Model saved successfully!
+2023-07-13 16:31:04,538 - Model - INFO - ---- EPOCH 026 EVALUATION ----
+2023-07-13 16:31:04,842 - Model - INFO - eval mean loss: 0.336993
+2023-07-13 16:31:04,842 - Model - INFO - eval point avg class IoU: 0.480997
+2023-07-13 16:31:04,842 - Model - INFO - eval point accuracy: 0.928200
+2023-07-13 16:31:04,842 - Model - INFO - eval point avg class acc: 0.515013
+2023-07-13 16:31:04,842 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.933, IoU: 0.034 
+class plane          weight: 0.067, IoU: 0.928 
+
+2023-07-13 16:31:04,842 - Model - INFO - Eval mean loss: 0.336993
+2023-07-13 16:31:04,842 - Model - INFO - Eval accuracy: 0.928200
+2023-07-13 16:31:04,842 - Model - INFO - Best mIoU: 0.499597
+2023-07-13 16:31:04,842 - Model - INFO - **** Epoch 27 (27/32) ****
+2023-07-13 16:31:04,842 - Model - INFO - Learning rate:0.000490
+2023-07-13 16:31:05,716 - Model - INFO - Training mean loss: 0.449288
+2023-07-13 16:31:05,716 - Model - INFO - Training accuracy: 0.882321
+2023-07-13 16:31:05,716 - Model - INFO - ---- EPOCH 027 EVALUATION ----
+2023-07-13 16:31:06,019 - Model - INFO - eval mean loss: 0.350712
+2023-07-13 16:31:06,019 - Model - INFO - eval point avg class IoU: 0.482257
+2023-07-13 16:31:06,019 - Model - INFO - eval point accuracy: 0.917206
+2023-07-13 16:31:06,019 - Model - INFO - eval point avg class acc: 0.521178
+2023-07-13 16:31:06,019 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.925, IoU: 0.048 
+class plane          weight: 0.075, IoU: 0.917 
+
+2023-07-13 16:31:06,019 - Model - INFO - Eval mean loss: 0.350712
+2023-07-13 16:31:06,019 - Model - INFO - Eval accuracy: 0.917206
+2023-07-13 16:31:06,020 - Model - INFO - Best mIoU: 0.499597
+2023-07-13 16:31:06,020 - Model - INFO - **** Epoch 28 (28/32) ****
+2023-07-13 16:31:06,020 - Model - INFO - Learning rate:0.000490
+2023-07-13 16:31:06,896 - Model - INFO - Training mean loss: 0.403055
+2023-07-13 16:31:06,896 - Model - INFO - Training accuracy: 0.903925
+2023-07-13 16:31:06,896 - Model - INFO - ---- EPOCH 028 EVALUATION ----
+2023-07-13 16:31:07,200 - Model - INFO - eval mean loss: 0.374091
+2023-07-13 16:31:07,200 - Model - INFO - eval point avg class IoU: 0.458939
+2023-07-13 16:31:07,200 - Model - INFO - eval point accuracy: 0.901573
+2023-07-13 16:31:07,200 - Model - INFO - eval point avg class acc: 0.502554
+2023-07-13 16:31:07,200 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.912, IoU: 0.016 
+class plane          weight: 0.088, IoU: 0.901 
+
+2023-07-13 16:31:07,200 - Model - INFO - Eval mean loss: 0.374091
+2023-07-13 16:31:07,200 - Model - INFO - Eval accuracy: 0.901573
+2023-07-13 16:31:07,200 - Model - INFO - Best mIoU: 0.499597
+2023-07-13 16:31:07,200 - Model - INFO - **** Epoch 29 (29/32) ****
+2023-07-13 16:31:07,200 - Model - INFO - Learning rate:0.000490
+2023-07-13 16:31:08,071 - Model - INFO - Training mean loss: 0.428132
+2023-07-13 16:31:08,071 - Model - INFO - Training accuracy: 0.883975
+2023-07-13 16:31:08,071 - Model - INFO - ---- EPOCH 029 EVALUATION ----
+2023-07-13 16:31:08,374 - Model - INFO - eval mean loss: 0.434047
+2023-07-13 16:31:08,374 - Model - INFO - eval point avg class IoU: 0.450650
+2023-07-13 16:31:08,374 - Model - INFO - eval point accuracy: 0.876183
+2023-07-13 16:31:08,374 - Model - INFO - eval point avg class acc: 0.508819
+2023-07-13 16:31:08,374 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.882, IoU: 0.026 
+class plane          weight: 0.118, IoU: 0.876 
+
+2023-07-13 16:31:08,374 - Model - INFO - Eval mean loss: 0.434047
+2023-07-13 16:31:08,374 - Model - INFO - Eval accuracy: 0.876183
+2023-07-13 16:31:08,374 - Model - INFO - Best mIoU: 0.499597
+2023-07-13 16:31:08,374 - Model - INFO - **** Epoch 30 (30/32) ****
+2023-07-13 16:31:08,374 - Model - INFO - Learning rate:0.000490
+2023-07-13 16:31:09,242 - Model - INFO - Training mean loss: 0.479966
+2023-07-13 16:31:09,243 - Model - INFO - Training accuracy: 0.862213
+2023-07-13 16:31:09,243 - Model - INFO - ---- EPOCH 030 EVALUATION ----
+2023-07-13 16:31:09,547 - Model - INFO - eval mean loss: 0.300629
+2023-07-13 16:31:09,547 - Model - INFO - eval point avg class IoU: 0.485227
+2023-07-13 16:31:09,547 - Model - INFO - eval point accuracy: 0.938744
+2023-07-13 16:31:09,547 - Model - INFO - eval point avg class acc: 0.513493
+2023-07-13 16:31:09,547 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.948, IoU: 0.032 
+class plane          weight: 0.052, IoU: 0.939 
+
+2023-07-13 16:31:09,547 - Model - INFO - Eval mean loss: 0.300629
+2023-07-13 16:31:09,547 - Model - INFO - Eval accuracy: 0.938744
+2023-07-13 16:31:09,547 - Model - INFO - Best mIoU: 0.499597
+2023-07-13 16:31:09,547 - Model - INFO - **** Epoch 31 (31/32) ****
+2023-07-13 16:31:09,547 - Model - INFO - Learning rate:0.000343
+2023-07-13 16:31:10,422 - Model - INFO - Training mean loss: 0.451668
+2023-07-13 16:31:10,422 - Model - INFO - Training accuracy: 0.863232
+2023-07-13 16:31:10,422 - Model - INFO - Saving model....
+2023-07-13 16:31:10,422 - Model - INFO - Model Saved at log/sem_seg/2023-07-13_16-30/checkpoints/model.pth
+2023-07-13 16:31:10,430 - Model - INFO - Model saved successfully!
+2023-07-13 16:31:10,430 - Model - INFO - ---- EPOCH 031 EVALUATION ----
+2023-07-13 16:31:10,736 - Model - INFO - eval mean loss: 0.393395
+2023-07-13 16:31:10,736 - Model - INFO - eval point avg class IoU: 0.452226
+2023-07-13 16:31:10,736 - Model - INFO - eval point accuracy: 0.892776
+2023-07-13 16:31:10,736 - Model - INFO - eval point avg class acc: 0.500786
+2023-07-13 16:31:10,736 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.902, IoU: 0.012 
+class plane          weight: 0.098, IoU: 0.893 
+
+2023-07-13 16:31:10,736 - Model - INFO - Eval mean loss: 0.393395
+2023-07-13 16:31:10,736 - Model - INFO - Eval accuracy: 0.892776
+2023-07-13 16:31:10,736 - Model - INFO - Best mIoU: 0.499597
+2023-07-13 16:31:10,736 - Model - INFO - **** Epoch 32 (32/32) ****
+2023-07-13 16:31:10,736 - Model - INFO - Learning rate:0.000343
+2023-07-13 16:31:11,615 - Model - INFO - Training mean loss: 0.375407
+2023-07-13 16:31:11,615 - Model - INFO - Training accuracy: 0.903812
+2023-07-13 16:31:11,616 - Model - INFO - ---- EPOCH 032 EVALUATION ----
+2023-07-13 16:31:11,919 - Model - INFO - eval mean loss: 0.354717
+2023-07-13 16:31:11,919 - Model - INFO - eval point avg class IoU: 0.492930
+2023-07-13 16:31:11,919 - Model - INFO - eval point accuracy: 0.916428
+2023-07-13 16:31:11,919 - Model - INFO - eval point avg class acc: 0.533856
+2023-07-13 16:31:11,919 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.923, IoU: 0.070 
+class plane          weight: 0.077, IoU: 0.916 
+
+2023-07-13 16:31:11,920 - Model - INFO - Eval mean loss: 0.354717
+2023-07-13 16:31:11,920 - Model - INFO - Eval accuracy: 0.916428
+2023-07-13 16:31:11,920 - Model - INFO - Best mIoU: 0.499597

@@ -1,0 +1,16 @@
+2023-07-13 17:04:11,629 - Model - INFO - PARAMETER ...
+2023-07-13 17:04:11,629 - Model - INFO - Namespace(batch_size=32, gpu='0', log_dir='pointnet2_sem_seg_notrans', npoint=4096, num_votes=3, test_area=5, train_ratio=0.7, visual=True)
+2023-07-13 17:04:11,661 - Model - INFO - using cuda:0 device.
+2023-07-13 17:04:11,661 - Model - INFO - start loading testing data ...
+2023-07-13 17:04:11,896 - Model - INFO - using 3 scene for testing.
+2023-07-13 17:04:12,445 - Model - INFO - ---- EVALUATION WHOLE SCENE----
+2023-07-13 17:04:20,057 - Model - INFO - Mean IoU of 1: 0.5059
+2023-07-13 17:04:24,492 - Model - INFO - Mean IoU of 4: 0.3968
+2023-07-13 17:04:29,631 - Model - INFO - Mean IoU of 3: 0.5372
+2023-07-13 17:04:29,665 - Model - INFO - ------- IoU --------
+class non-plane     , IoU: 0.210 
+class plane         , IoU: 0.832 
+
+2023-07-13 17:04:29,665 - Model - INFO - eval point avg class IoU: 0.520899
+2023-07-13 17:04:29,665 - Model - INFO - eval whole scene point avg class acc: 0.604537
+2023-07-13 17:04:29,665 - Model - INFO - eval whole scene point accuracy: 0.838893

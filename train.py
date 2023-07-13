@@ -13,7 +13,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
-from datasets import pointData
+from datasets import PointData
 from models import pointnet2_sem_seg
 import provider
 
@@ -27,6 +27,7 @@ seg_classes = class2label
 seg_label_to_cat = {}
 for i, cat in enumerate(seg_classes.keys()):
     seg_label_to_cat[i] = cat
+
 
 def inplace_relu(m):
     classname = m.__class__.__name__
@@ -111,7 +112,7 @@ def main(args):
 
     '''DATASET LOADING'''
     log_string("start loading training data ...")
-    train_set = pointData(rootpath, num_classes, num_points, 1.0, train_ratio, "train")
+    train_set = PointData(rootpath, num_classes, num_points, train_ratio, "train")
     train_loader = DataLoader(train_set,
                               batch_size=batch_size,
                               shuffle=True,
@@ -122,7 +123,7 @@ def main(args):
     weights = torch.Tensor(train_set.labelweights).to(device)
 
     log_string("start loading testing data ...")
-    test_set = pointData(rootpath, num_classes, num_points, 1.0, train_ratio, "test")
+    test_set = PointData(rootpath, num_classes, num_points, train_ratio, "test")
     test_loader = DataLoader(test_set,
                               batch_size=batch_size,
                               shuffle=False,
@@ -146,16 +147,18 @@ def main(args):
         classifier.load_state_dict(checkpoint['model_state_dict'])
         log_string('Use pretrain model')
     except:
-        log_string('No existing model, starting training from scratch...')
         start_epoch = 0
         classifier = classifier.apply(weights_init)
         if args.transfer == True:
+            log_string('No existing model, using transfer learning...')
             transfer_model = torch.load('./weights/semseg_model.pth')
             classifier_state_dict = classifier.state_dict()
             for key in transfer_model['model_state_dict'].keys():
                 if key in classifier_state_dict.keys():
                     if transfer_model['model_state_dict'][key].shape == classifier_state_dict[key].shape:
                         classifier_state_dict[key] = transfer_model['model_state_dict'][key]
+        else:
+            log_string('No existing model, starting training from scratch...')
 
     if args.transfer == True:
         require_grad_layer = ["sa1", "conv2"]
