@@ -11,8 +11,9 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
+import open3d as o3d
 
-from datasets import pointData
+from datasets import PointData
 from models import pointnet2_sem_seg
 import provider
 
@@ -108,7 +109,7 @@ def main(args):
 
     # '''DATASET LOADING'''
     # log_string("start loading training data ...")
-    # train_set = pointData(rootpath, num_classes, num_points, 1.0, train_ratio, "train")
+    # train_set = PointData(rootpath, num_classes, num_points, 1.0, train_ratio, "train")
     # train_loader = DataLoader(train_set,
     #                           batch_size=batch_size,
     #                           shuffle=True,
@@ -119,7 +120,7 @@ def main(args):
     # weights = torch.Tensor(train_set.labelweights).to(device)
 
     # log_string("start loading testing data ...")
-    # test_set = pointData(rootpath, num_classes, num_points, 1.0, train_ratio, "test")
+    # test_set = PointData(rootpath, num_classes, num_points, 1.0, train_ratio, "test")
     # test_loader = DataLoader(test_set,
     #                           batch_size=batch_size,
     #                           shuffle=False,
@@ -159,8 +160,8 @@ def main(args):
     print(len(grad_params))
 
 if __name__ == "__main__":
-    args = parse_args()
-    main(args)
+    # args = parse_args()
+    # main(args)
 
 
     # ## script 1
@@ -201,7 +202,7 @@ if __name__ == "__main__":
 
     # ## script 2
     # batch_size = 8
-    # train_set = datasets.pointData("./data", 4096, 0.8, "train")
+    # train_set = datasets.PointData("./data", 4096, 0.8, "train")
     # train_loader = DataLoader(train_set,
     #               batch_size=batch_size,
     #               shuffle=True,
@@ -219,3 +220,7 @@ if __name__ == "__main__":
     # pcd = o3d.io.read_point_cloud(pcd_file)
     # points = np.asarray(pcd.points)
     # print(torch.tensor(points))
+
+    # show pcd
+    pcd = o3d.io.read_point_cloud("/home/minghan/workspace/plane_detection_NN/PointNet2_plane/data/data07171308/pointcloud/15.pcd")
+    o3d.visualization.draw_geometries([pcd])

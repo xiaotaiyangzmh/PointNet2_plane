@@ -21,27 +21,35 @@ cd PointNet2_plane/
 ```
 
 ## Training
-Run the following command to train a plane segmentation model using transfer learning
+If the training uses transfer learning
+Run the following command to train a plane segmentation model with only plane data (dataset 1)
 ```
-python train.py --model pointnet2_sem_seg --epoch 32 --log_dir pointnet2_sem_seg
+python train_only_planes.py --model pointnet2_sem_seg --datapath "./data_plane/pointcloud" --epoch 32 --log_dir pointnet2_only_planes
 
 ```
-Run the following command if the model is trained from scratch
+Run the following command to train a plane segmentation model with both planes and non-planes (dataset 2)
 ```
-python train.py --model pointnet2_sem_seg --epoch 32 --log_dir pointnet2_sem_seg_notrans --transfer
+python train_with_nonplanes.py --model pointnet2_sem_seg --datapath "./data_scene" --epoch 32 --log_dir pointnet2_with_nonplanes
+
+```
+Run the following command to train a plane segmentation model with both planes and non-planes (dataset 1 & dataset 2)
+```
+python train_combine_data.py --model pointnet2_sem_seg --datapath1 "./data_plane/pointcloud" --datapath2 "./data_scene" --epoch 32 --log_dir pointnet2_combine_data
+
+```
+
+If the model is trained from scratch, add one argument ```--transfer```, for example
+```
+python train_with_nonplanes.py --model pointnet2_sem_seg --datapath "./data_scene" --epoch 32 --log_dir pointnet2_with_nonplanes --transfer
 
 ```
 
 ## Testing
-Pre-trained model using transfer learning is saved in /log/sem_seg/pretained_model_1
-Run the following command to test the pre-trained model with the whole scene
+Run the following command to test the model with the whole scene
 ```
-python test.py  --log_dir pretained_model_1 --visual
-```
-Or run the following command to test the model trained by yourself
-```
-python test.py  --log_dir pointnet2_sem_seg --visual
-python test.py  --log_dir pointnet2_sem_seg_notrans --visual
+python test.py  --log_dir pointnet2_only_planes --visual
+python test.py  --log_dir pointnet2_with_nonplanes --visual
+python test.py  --log_dir pointnet2_combine_data --visual
 ```
 
 ## Reference
