@@ -164,7 +164,7 @@ if __name__ == "__main__":
     # main(args)
 
 
-    # ## script 1
+    # ## -------------- script 1 --------------
     # pcd_file = "./data/cloud/fast_cloud.pcd"
     # normal_file = "./data/normal/normals.txt"
     # label_file = "./data/label/labels.txt"
@@ -200,27 +200,109 @@ if __name__ == "__main__":
     # t4 = time.time()
     # print(t4-t3, t3-t2, t2-t1, t1-t0)
 
-    # ## script 2
-    # batch_size = 8
-    # train_set = datasets.PointData("./data", 4096, 0.8, "train")
-    # train_loader = DataLoader(train_set,
-    #               batch_size=batch_size,
-    #               shuffle=True,
-    #               num_workers=0)
-    # for points_data, labels_data, index in train_loader:
-    #     print(type(points_data), points_data.shape)
-    #     print(type(labels_data), labels_data.shape)
+    # ## -------------- show pcd --------------
+    # xyz = np.load("./data_plane/test/22.npy", allow_pickle=True)
+    # pcd = o3d.geometry.PointCloud()
+    # pcd.points = o3d.utility.Vector3dVector(xyz.item()['data'])
+    # o3d.visualization.draw_geometries([pcd])
 
-    # ## script 3
-    # data = np.load("./data/HKPS_labels.npy")
-    # print(data)
+    # pcd = o3d.io.read_point_cloud("/home/minghan/workspace/plane_detection_NN/PointNet2_plane/data_plane/pcd_nonplane/pcd_no_noise/2.pcd")
+    # o3d.visualization.draw_geometries([pcd])
 
-    # ## script 4
-    # pcd_file = "./data/ouster/test.pcd"
-    # pcd = o3d.io.read_point_cloud(pcd_file)
-    # points = np.asarray(pcd.points)
-    # print(torch.tensor(points))
+    # pcd = o3d.io.read_point_cloud("/home/minghan/workspace/plane_detection_NN/PointNet2_plane/data_plane/pcd_nonplane/pcd_noise/2.pcd")
+    # o3d.visualization.draw_geometries([pcd])
 
-    # show pcd
-    pcd = o3d.io.read_point_cloud("/home/minghan/workspace/plane_detection_NN/PointNet2_plane/data/data07171308/pointcloud/15.pcd")
-    o3d.visualization.draw_geometries([pcd])
+    # label = np.load("/home/minghan/workspace/plane_detection_NN/PointNet2_plane/data_plane/pcd_nonplane/label/2.npy")
+    # print(label.shape, label[label==1].shape)
+
+    # # loading data
+    # rootpath = "./data_plane/pcd_data/pcd_noise"
+    # cloud_filename = sorted(os.listdir(rootpath))
+    # cloud_files = [os.path.join(rootpath, filename) for filename in cloud_filename]
+    # i = 1313
+    # pcd = o3d.io.read_point_cloud(cloud_files[i])
+    # o3d.visualization.draw_geometries([pcd])
+
+    # # # TODO: visualize with different colours
+    # rootpath = "./data_plane/rawDataNonPlane"
+    # # loading point cloud
+    # cloud_path = os.path.join(rootpath, "cameraPC")
+    # cloud_filename = sorted(os.listdir(cloud_path))
+    # cloud_files = [os.path.join(cloud_path, filename) for filename in cloud_filename]
+
+    # # loading ground truth label
+    # label_path = os.path.join(rootpath, "cameraLabels")
+    # label_filename = sorted(os.listdir(label_path))
+    # label_files = [os.path.join(label_path, filename) for filename in label_filename]
+    # assert len(cloud_files) == len(label_files)
+
+    # for i in range(len(cloud_files)):
+    #     # load point cloud
+    #     pcd = o3d.io.read_point_cloud(cloud_files[i])
+    #     points_num = np.asarray(pcd.points).shape[0]
+
+    #     # load labels
+    #     labels = np.load(label_files[i])
+
+    #     # paint the point cloud
+    #     plane_colors = np.array([[0.1, 0.1, 0.3]])
+    #     non_plane_colors = np.array([[0.8, 0.2, 0.3]])
+    #     gt_colors = np.repeat(non_plane_colors, points_num, axis=0)
+    #     gt_colors[labels==2] = plane_colors
+    #     pcd.colors = o3d.Vector3dVector(gt_colors)
+    #     o3d.visualization.draw_geometries([pcd])
+    #     break
+
+    # # TODO: visualize with different colours
+    # root_path = "./log/sem_seg/pointnet2_with_nonplanes/visual"
+    # all_filenames = sorted(os.listdir(root_path))
+    # pred_files = [os.path.join(root_path, filename) for filename in all_filenames if filename.endswith("pred.pcd")]
+    # gt_files = [os.path.join(root_path, filename) for filename in all_filenames if filename.endswith("gt.pcd")]
+    # assert len(pred_files ) == len(gt_files)
+
+    # for i in range(2):
+    #     # load point cloud
+    #     gt_pcd = o3d.io.read_point_cloud(gt_files[i])
+    #     o3d.visualization.draw_geometries([gt_pcd])
+
+    #     pred_pcd = o3d.io.read_point_cloud(pred_files[i])
+    #     o3d.visualization.draw_geometries([pred_pcd])
+
+    # # TODO: compute the percentage of planes and non-planes (gt)
+    # rootpath = "./data_scene"
+    # label_path = os.path.join(rootpath, "label")
+    # label_filename = sorted(os.listdir(label_path))
+    # label_files = [os.path.join(label_path, filename) for filename in label_filename]
+
+    # gt_plane_num = 0
+    # gt_nonplane_num = 0
+    # for i in range(len(label_files)):
+    #     # load labels
+    #     with open(label_files[i]) as f:
+    #         lines = f.readlines()
+    #     # 0 for non-plane, 1 for plane
+    #     l_labels = [int(l[0]) if int(l[0]) == 0 else 1 for l in lines]
+    #     labels = np.asarray(l_labels)
+
+    #     gt_plane_num += labels[labels == 1].shape[0]
+    #     gt_nonplane_num += labels[labels == 0].shape[0]
+    # print(f"plane is {round(gt_plane_num * 100 / (gt_plane_num + gt_nonplane_num), 2)}% of gt label")
+    # print(f"non-plane is {round(gt_nonplane_num * 100 / (gt_plane_num + gt_nonplane_num), 2)}% of gt label")
+
+    # # TODO: compute the percentage of planes and non-planes (pred with dataset 2)
+    # pred_label_path = "./log/sem_seg/pointnet2_with_nonplanes/visual"
+    # pred_label_filename = sorted(os.listdir(pred_label_path))
+    # pred_label_files = [os.path.join(pred_label_path, filename) for filename in pred_label_filename if filename.endswith("pred.npy")]
+
+    # pred_plane_num = 0
+    # pred_nonplane_num = 0
+    # for i in range(len(pred_label_files)):
+    #     # load labels
+    #     pred_labels = np.load(pred_label_files[i])
+    #     pred_plane_num += pred_labels[pred_labels == 1].shape[0]
+    #     pred_nonplane_num += pred_labels[pred_labels == 0].shape[0]
+    # print(f"plane is {round(pred_plane_num * 100 / (pred_plane_num + pred_nonplane_num), 2)}% of pred label")
+    # print(f"non-plane is {round(pred_nonplane_num * 100 / (pred_plane_num + pred_nonplane_num), 2)}% of pred label")
+
+    a = list([2, 3, 3]) + list([4, 5])
+    idx = [2, 3]

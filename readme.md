@@ -22,34 +22,34 @@ cd PointNet2_plane/
 
 ## Training
 If the training uses transfer learning
-Run the following command to train a plane segmentation model with only plane data (dataset 1)
+Run the following command to train a plane segmentation model with all synthetic data (dataset 1 & dataset 2)
 ```
-python train_only_planes.py --model pointnet2_sem_seg --datapath "./data_plane/pointcloud" --epoch 32 --log_dir pointnet2_only_planes
+python train_synthetic_data.py --model pointnet2_sem_seg --datapath1 "./data_synthetic/pcd_plane" --datapath2 "./data_synthetic/pcd_nonplane" --epoch 32 --log_dir pointnet2_synthetic_data
 
 ```
-Run the following command to train a plane segmentation model with both planes and non-planes (dataset 2)
+Run the following command to train a plane segmentation model with real scene
 ```
-python train_with_nonplanes.py --model pointnet2_sem_seg --datapath "./data_scene" --epoch 32 --log_dir pointnet2_with_nonplanes
-
-```
-Run the following command to train a plane segmentation model with both planes and non-planes (dataset 1 & dataset 2)
-```
-python train_combine_data.py --model pointnet2_sem_seg --datapath1 "./data_plane/pointcloud" --datapath2 "./data_scene" --epoch 32 --log_dir pointnet2_combine_data
+python train_real_data.py --model pointnet2_sem_seg --datapath "./data_scene" --epoch 32 --log_dir pointnet2_real_data
 
 ```
 
 If the model is trained from scratch, add one argument ```--transfer```, for example
 ```
-python train_with_nonplanes.py --model pointnet2_sem_seg --datapath "./data_scene" --epoch 32 --log_dir pointnet2_with_nonplanes --transfer
+python train_synthetic_data.py --model pointnet2_sem_seg --datapath1 "./data_synthetic/pcd_plane" --datapath2 "./data_synthetic/pcd_nonplane" --epoch 32 --log_dir pointnet2_synthetic_data --transfer
 
 ```
 
 ## Testing
-Run the following command to test the model with the whole scene
+Run the following command to test the model with the labelled whole scene
 ```
-python test.py  --log_dir pointnet2_only_planes --visual
-python test.py  --log_dir pointnet2_with_nonplanes --visual
-python test.py  --log_dir pointnet2_combine_data --visual
+python test_labelled.py  --log_dir pointnet2_real_data --visual
+python test_labelled.py  --log_dir pointnet2_synthetic_data --visual
+```
+
+Run the following command to test the model with the unlabelled whole scene
+```
+python test_unlabelled.py  --log_dir pointnet2_real_data
+python test_unlabelled.py  --log_dir pointnet2_synthetic_data
 ```
 
 ## Reference

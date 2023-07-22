@@ -1,0 +1,69 @@
+2023-07-22 00:42:58,371 - Model - INFO - PARAMETER ...
+2023-07-22 00:42:58,371 - Model - INFO - Namespace(batch_size=16, datapath1='./data_synthetic/pcd_plane', datapath2='./data_synthetic/pcd_nonplane', decay_rate=0.0001, epoch=32, gpu='0', learning_rate=0.001, log_dir='pointnet2_synthetic_data', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', plot=True, step_size=10, train_ratio1=0.9, train_ratio2=0.9, transfer=True)
+2023-07-22 00:42:58,380 - Model - INFO - using cuda:0 device.
+2023-07-22 00:42:58,380 - Model - INFO - 
+
+>>>>>>>> DATASET LOADING <<<<<<<<
+2023-07-22 00:42:58,380 - Model - INFO - start loading training data ...
+2023-07-22 00:44:29,787 - Model - INFO - using 214002 samples for training.
+2023-07-22 00:44:30,813 - Model - INFO - 
+start loading testing data ...
+2023-07-22 00:44:41,325 - Model - INFO - using 23901 samples for testing.
+2023-07-22 00:44:41,326 - Model - INFO - 
+
+>>>>>>>> MODEL LOADING <<<<<<<<
+2023-07-22 00:44:41,354 - Model - INFO - No existing model, using transfer learning...
+2023-07-22 00:44:41,385 - Model - INFO - 
+
+>>>>>>>> TRAINING & TESTING <<<<<<<<
+2023-07-22 00:44:41,385 - Model - INFO - **** Epoch 1 (1/32) ****
+2023-07-22 00:44:41,385 - Model - INFO - Learning rate:0.001000
+2023-07-22 00:49:35,962 - Model - INFO - PARAMETER ...
+2023-07-22 00:49:35,962 - Model - INFO - Namespace(batch_size=16, datapath1='./data_synthetic/pcd_plane', datapath2='./data_synthetic/pcd_nonplane', decay_rate=0.0001, epoch=32, gpu='0', learning_rate=0.001, log_dir='pointnet2_synthetic_data', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', plot=True, step_size=10, train_ratio1=0.9, train_ratio2=0.9, transfer=True)
+2023-07-22 00:49:35,992 - Model - INFO - using cuda:0 device.
+2023-07-22 00:49:35,992 - Model - INFO - 
+
+>>>>>>>> DATASET LOADING <<<<<<<<
+2023-07-22 00:49:35,992 - Model - INFO - start loading training data ...
+2023-07-22 00:54:53,969 - Model - INFO - PARAMETER ...
+2023-07-22 00:54:53,969 - Model - INFO - Namespace(batch_size=16, datapath1='./data_synthetic/pcd_plane', datapath2='./data_synthetic/pcd_nonplane', decay_rate=0.0001, epoch=32, gpu='0', learning_rate=0.001, log_dir='pointnet2_synthetic_data', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', plot=True, step_size=10, train_ratio1=0.9, train_ratio2=0.9, transfer=True)
+2023-07-22 00:54:54,000 - Model - INFO - using cuda:0 device.
+2023-07-22 00:54:54,001 - Model - INFO - 
+
+>>>>>>>> DATASET LOADING <<<<<<<<
+2023-07-22 00:54:54,001 - Model - INFO - start loading training data ...
+2023-07-22 00:55:38,331 - Model - INFO - using 97422 samples for training.
+2023-07-22 00:55:38,812 - Model - INFO - 
+start loading testing data ...
+2023-07-22 00:55:43,718 - Model - INFO - using 10844 samples for testing.
+2023-07-22 00:55:43,718 - Model - INFO - 
+
+>>>>>>>> MODEL LOADING <<<<<<<<
+2023-07-22 00:55:43,747 - Model - INFO - No existing model, using transfer learning...
+2023-07-22 00:55:43,760 - Model - INFO - 
+
+>>>>>>>> TRAINING & TESTING <<<<<<<<
+2023-07-22 00:55:43,760 - Model - INFO - **** Epoch 1 (1/32) ****
+2023-07-22 00:55:43,760 - Model - INFO - Learning rate:0.001000
+2023-07-22 01:17:57,180 - Model - INFO - Training mean loss: 0.405101
+2023-07-22 01:17:57,180 - Model - INFO - Training accuracy: 0.814848
+2023-07-22 01:17:57,180 - Model - INFO - Saving model....
+2023-07-22 01:17:57,180 - Model - INFO - Model Saved at log/sem_seg/pointnet2_synthetic_data/checkpoints/model.pth
+2023-07-22 01:17:57,187 - Model - INFO - Model saved successfully!
+2023-07-22 01:17:57,400 - Model - INFO - ---- EPOCH 001 EVALUATION ----
+2023-07-22 01:20:14,087 - Model - INFO - eval mean loss: 0.476249
+2023-07-22 01:20:14,087 - Model - INFO - eval point avg class IoU: 0.605091
+2023-07-22 01:20:14,087 - Model - INFO - eval point accuracy: 0.755960
+2023-07-22 01:20:14,087 - Model - INFO - eval point avg class acc: 0.774247
+2023-07-22 01:20:14,087 - Model - INFO - ------- IoU --------
+class non-plane      weight: 0.551, IoU: 0.637 
+class plane          weight: 0.449, IoU: 0.573 
+
+2023-07-22 01:20:14,087 - Model - INFO - Eval mean loss: 0.476249
+2023-07-22 01:20:14,087 - Model - INFO - Eval accuracy: 0.755960
+2023-07-22 01:20:14,087 - Model - INFO - Saving model....
+2023-07-22 01:20:14,087 - Model - INFO - Model Saved at log/sem_seg/pointnet2_synthetic_data/checkpoints/best_model.pth
+2023-07-22 01:20:14,094 - Model - INFO - Best model saved successfully!
+2023-07-22 01:20:14,094 - Model - INFO - Best mIoU: 0.605091
+2023-07-22 01:20:14,094 - Model - INFO - **** Epoch 2 (2/32) ****
+2023-07-22 01:20:14,094 - Model - INFO - Learning rate:0.001000

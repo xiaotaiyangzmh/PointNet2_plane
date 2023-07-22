@@ -50,7 +50,7 @@ def bn_momentum_adjust(m, momentum):
 def parse_args():
     parser = argparse.ArgumentParser('Model')
     parser.add_argument('--model', type=str, default='pointnet2_sem_seg', help='Model name [default: pointnet2_sem_seg]')
-    parser.add_argument('--datapath', type=str, default=None, help='Rootpath of data, "./data_plane/pointcloud" or "./data_scene" [default: None]')
+    parser.add_argument('--datapath', type=str, default=None, help='Rootpath of data, "./data_plane/pcd_data/pcd_noise" or "./data_scene" [default: None]')
     parser.add_argument('--batch_size', type=int, default=16, help='Batch Size during training [default: 16]')
     parser.add_argument('--train_ratio', default=0.9, type=float, help='Ratio of train set [default: 0.9]')
     parser.add_argument('--epoch', default=32, type=int, help='Epoch to run [default: 32]')
