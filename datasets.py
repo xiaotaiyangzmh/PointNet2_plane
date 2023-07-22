@@ -76,7 +76,7 @@ class SyntheticData(Dataset):
             self.coord_min_list.append(coord_min), self.coord_max_list.append(coord_max)
             num_point_all.append(labels.size)
 
-        # loading data with both planes and non-planes
+        # loading data with non-planes (dataset 2)
         cloud_path2 = os.path.join(rootpath2, "pcd_noise")
         cloud_filename2 = sorted(os.listdir(cloud_path2))
         cloud_files2 = [os.path.join(cloud_path2, filename) for filename in cloud_filename2]
@@ -86,7 +86,7 @@ class SyntheticData(Dataset):
         label_files2 = [os.path.join(label_path2, filename) for filename in label_filename2]
         assert len(cloud_files2) == len(label_files2)
 
-        # split data with both planes and non-planes
+        # split data with non-planes (dataset 2)
         model_num2 = len(cloud_files2)
         train_size2 = int(model_num2 * train_ratio2)
         indices2 = list(range(model_num2))
@@ -132,6 +132,125 @@ class SyntheticData(Dataset):
         assert len(self.points_list) == len(self.labels_list)
         print(f"loading {len(self.points_list)} models successfully!")
         print(f"Totally {len(self.cloud_idxs)} samples in {mod} set.")
+            
+    def __getitem__(self, idx):
+        cloud_idx = self.cloud_idxs[idx]
+        points = self.points_list[cloud_idx]
+        labels = self.labels_list[cloud_idx]
+        N_points = points.shape[0]
+
+        # find the sampling center
+        iter_num = 0
+        tmp_size = self.block_size
+        while (True):
+            center = points[np.random.choice(N_points)][:3]
+            block_min = center - [tmp_size / 2.0, tmp_size / 2.0, 0]
+            block_max = center + [tmp_size / 2.0, tmp_size / 2.0, 0]
+            point_idxs = np.where((points[:, 0] >= block_min[0]) & (points[:, 0] <= block_max[0]) & (points[:, 1] >= block_min[1]) & (points[:, 1] <= block_max[1]))[0]
+            if point_idxs.size > 1024:
+                break
+            else:
+                iter_num += 1
+
+            # increase the block scale if the center cannot be found
+            if iter_num % 5 == 0:
+                tmp_size += self.block_size
+
+        if point_idxs.size >= self.num_point:
+            selected_point_idxs = np.random.choice(point_idxs, self.num_point, replace=False)
+        else:
+            selected_point_idxs = np.random.choice(point_idxs, self.num_point, replace=True)
+
+        # normalize the sampled points
+        selected_points = points[selected_point_idxs, :]  # num_point * 3
+        current_points = np.zeros((self.num_point, 6))
+        # TODO: If we only want to distinguish plane and non-plane, we can scale the x, y, z differently,
+        # but if we want to get the plane parameters, x, y, z should be scaled with the same value
+        # coord_min, coord_max = np.amin(points, axis=0)[:3], np.amax(points)[:3]
+        current_points[:, 3] = selected_points[:, 0] / self.coord_max_list[cloud_idx][0]
+        current_points[:, 4] = selected_points[:, 1] / self.coord_max_list[cloud_idx][1]
+        current_points[:, 5] = selected_points[:, 2] / self.coord_max_list[cloud_idx][2]
+        selected_points[:, 0] = selected_points[:, 0] - center[0]
+        selected_points[:, 1] = selected_points[:, 1] - center[1]
+        selected_points[:, 2] = selected_points[:, 2] - center[2]
+        current_points[:, 0:3] = selected_points
+        current_labels = labels[selected_point_idxs]
+
+        return current_points, current_labels
+
+    def __len__(self):
+
+        return len(self.cloud_idxs)
+
+
+class SyntheticCombinedData(Dataset):
+    """
+    This class create dataset with combined synthetic data.
+    
+    Arguments:
+
+    rootpath: root path of data, "./data_scene"
+    num_classes: the number of classes
+    num_point: the number of points in each sampling group
+    """
+    
+    def __init__(self, rootpath, num_classes, num_point, block_size=1.0):
+
+        super(SyntheticCombinedData, self).__init__()
+
+        self.num_point = num_point
+        self.block_size = block_size
+
+        # loading data
+        cloud_path = os.path.join(rootpath, "pcd_noise")
+        cloud_filename = sorted(os.listdir(cloud_path))
+        cloud_files = [os.path.join(cloud_path, filename) for filename in cloud_filename]
+
+        label_path = os.path.join(rootpath, "label")
+        label_filename = sorted(os.listdir(label_path))
+        label_files = [os.path.join(label_path, filename) for filename in label_filename]
+        assert len(cloud_files) == len(label_files)
+
+        # split data
+        model_num = len(cloud_files)
+        split_indices = list(range(model_num))
+        print(f"loading {len(split_indices)} models ...")
+
+        self.points_list, self.labels_list = [], []
+        self.coord_min_list, self.coord_max_list = [], []
+        num_point_all = []
+        labelweights = np.zeros(num_classes)
+
+        for i in tqdm(split_indices, total=len(split_indices)):
+            # load point cloud
+            pcd = o3d.io.read_point_cloud(cloud_files[i])
+            points = np.asarray(pcd.points)
+            points_num = points.shape[0]
+
+            # load labels
+            labels = np.load(label_files[i]).astype(np.float64)
+            tmp, _ = np.histogram(labels, range(3))
+            labelweights += tmp
+            coord_min, coord_max = np.amin(points, axis=0)[:3], np.amax(points, axis=0)[:3]
+            self.points_list.append(points), self.labels_list.append(labels)
+            self.coord_min_list.append(coord_min), self.coord_max_list.append(coord_max)
+            num_point_all.append(labels.size)
+
+        labelweights = labelweights.astype(np.float32)
+        labelweights = labelweights / np.sum(labelweights)
+        self.labelweights = np.power(np.amax(labelweights) / labelweights, 1 / 3.0)
+
+        sample_prob = num_point_all / np.sum(num_point_all)
+        num_iter = int(np.sum(num_point_all) / num_point)
+
+        cloud_idxs = []
+        for index in range(len(split_indices)):
+            cloud_idxs.extend([index] * int(round(sample_prob[index] * num_iter)))
+        self.cloud_idxs = np.array(cloud_idxs)
+
+        assert len(self.points_list) == len(self.labels_list)
+        print(f"loading {len(self.points_list)} models successfully!")
+        print(f"Totally {len(self.cloud_idxs)} samples.")
             
     def __getitem__(self, idx):
         cloud_idx = self.cloud_idxs[idx]
@@ -453,7 +572,7 @@ class SceneUnlabelledData():
     mod: train or test
     """
     
-    def __init__(self, rootpath, num_classes, num_point, stride=0.5, block_size=1.0, padding=0.001, mod="test"):
+    def __init__(self, rootpath, num_classes, num_point, stride=1.5, block_size=3, padding=0.001, mod="test"):
         super(SceneUnlabelledData, self).__init__()
 
         self.num_point = num_point

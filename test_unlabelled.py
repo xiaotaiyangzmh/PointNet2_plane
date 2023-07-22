@@ -8,6 +8,7 @@ import shutil
 from pathlib import Path
 from tqdm import tqdm
 import numpy as np
+import open3d as o3d
 import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
@@ -56,9 +57,9 @@ def main(args):
 
     '''HYPER PARAMETER'''
     experiment_dir = 'log/sem_seg/' + args.log_dir
-    labels_dir = experiment_dir + '/pred_labels'
-    labels_dir = Path(labels_dir)
-    labels_dir.mkdir(exist_ok=True)
+    visual_dir = experiment_dir + '/eval_unlabelled'
+    visual_dir = Path(visual_dir)
+    visual_dir.mkdir(exist_ok=True)
 
     '''LOG'''
     args = parse_args()
@@ -135,11 +136,23 @@ def main(args):
 
             pred_label = np.argmax(vote_label_pool, 1)
 
-            filename = os.path.join(labels_dir, str(scene_id[batch_idx]) + '.txt')
-            with open(filename, 'w') as pl_save:
-                for i in pred_label:
-                    pl_save.write(str(int(i)) + '\n')
-                pl_save.close()
+            # save the label
+            pred_filename = os.path.join(visual_dir, str(scene_id[batch_idx]) + '_pred.npy')
+            np.save(pred_filename, pred_label)
+
+            # save the point cloud
+            plane_colors = np.array([[0.1, 0.1, 0.3]])
+            non_plane_colors = np.array([[0.8, 0.2, 0.3]])
+            pred_pcd = o3d.geometry.PointCloud()
+            pred_pcd.points = o3d.utility.Vector3dVector(whole_scene_data)
+            points_num = whole_scene_data.shape[0]
+            # paint the pred point cloud
+            pred_colors = np.repeat(non_plane_colors, points_num, axis=0)
+            pred_colors[pred_label==1] = plane_colors
+            pred_pcd.colors = o3d.Vector3dVector(pred_colors)
+            # save the point cloud
+            pcd_path = os.path.join(visual_dir, str(scene_id[batch_idx]) + '_pred.pcd')
+            o3d.io.write_point_cloud(pcd_path, pred_pcd)
 
         print("Done!")
 

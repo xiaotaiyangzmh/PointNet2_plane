@@ -61,7 +61,7 @@ def main(args):
 
     '''HYPER PARAMETER'''
     experiment_dir = 'log/sem_seg/' + args.log_dir
-    visual_dir = experiment_dir + '/visual/'
+    visual_dir = experiment_dir + '/eval_labelled/'
     visual_dir = Path(visual_dir)
     visual_dir.mkdir(exist_ok=True)
 
@@ -201,7 +201,7 @@ def main(args):
                 pred_pcd.points = o3d.utility.Vector3dVector(whole_scene_data)
                 points_num = whole_scene_data.shape[0]
                 # paint the pred point cloud
-                pred_colors = np.ones((points_num, 3)) * 0.8
+                pred_colors = np.repeat(non_plane_colors, points_num, axis=0)
                 pred_colors[pred_label==1] = plane_colors
                 pred_pcd.colors = o3d.Vector3dVector(pred_colors)
                 # save the point cloud

@@ -1,0 +1,20 @@
+2023-07-22 13:43:56,198 - Model - INFO - PARAMETER ...
+2023-07-22 13:43:56,198 - Model - INFO - Namespace(batch_size=16, decay_rate=0.0001, epoch=32, gpu='0', learning_rate=0.001, log_dir='pointnet2_synthetic_combined_data', lr_decay=0.7, model='pointnet2_sem_seg', npoint=4096, optimizer='Adam', plot=True, step_size=10, test_path='./data_synthetic/pcd_combined_test', train_path='./data_synthetic/pcd_combined_train', transfer=True)
+2023-07-22 13:43:56,224 - Model - INFO - using cuda:0 device.
+2023-07-22 13:43:56,224 - Model - INFO - 
+
+>>>>>>>> DATASET LOADING <<<<<<<<
+2023-07-22 13:43:56,224 - Model - INFO - start loading training data ...
+2023-07-22 13:46:16,524 - Model - INFO - using 296026 samples for training.
+2023-07-22 13:46:16,973 - Model - INFO - 
+start loading testing data ...
+2023-07-22 13:46:32,081 - Model - INFO - using 30887 samples for testing.
+2023-07-22 13:46:32,081 - Model - INFO - 
+
+>>>>>>>> MODEL LOADING <<<<<<<<
+2023-07-22 13:46:32,113 - Model - INFO - No existing model, using transfer learning...
+2023-07-22 13:46:32,137 - Model - INFO - 
+
+>>>>>>>> TRAINING & TESTING <<<<<<<<
+2023-07-22 13:46:32,137 - Model - INFO - **** Epoch 1 (1/32) ****
+2023-07-22 13:46:32,137 - Model - INFO - Learning rate:0.001000

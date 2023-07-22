@@ -22,10 +22,14 @@ cd PointNet2_plane/
 
 ## Training
 If the training uses transfer learning
-Run the following command to train a plane segmentation model with all synthetic data (dataset 1 & dataset 2)
+Run the following command to train a plane segmentation model with plane and non-plane synthetic data (dataset 1 & dataset 2)
 ```
 python train_synthetic_data.py --model pointnet2_sem_seg --datapath1 "./data_synthetic/pcd_plane" --datapath2 "./data_synthetic/pcd_nonplane" --epoch 32 --log_dir pointnet2_synthetic_data
 
+```
+Run the following command to train a plane segmentation model with combined synthetic data (dataset 1 & dataset 2)
+```
+python train_synthetic_combined_data.py  --model pointnet2_sem_seg --train_path "./data_synthetic/pcd_combined_train" --test_path "./data_synthetic/pcd_combined_test" --epoch 32 --log_dir pointnet2_synthetic_combined_data
 ```
 Run the following command to train a plane segmentation model with real scene
 ```

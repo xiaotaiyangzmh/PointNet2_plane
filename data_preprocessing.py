@@ -1,6 +1,7 @@
 import os
 import sys
 import numpy as np
+import random
 import cv2
 import open3d as o3d
 from path import Path
@@ -16,10 +17,159 @@ sys.path.append(DATA_PATH)
 if __name__ == '__main__':
     '''PARAMETERS'''
     parser = argparse.ArgumentParser('Data Preprocessing')
-    parser.add_argument('--data', type=str, default='plane_pcd', help='The kind of raw data')
+    parser.add_argument('--data', type=str, default='combine_pcd', help='The kind of raw data')
     args = parser.parse_args()
 
-    if args.data == "plane_pcd":
+    if args.data == "combine_pcd":
+        rootpath1 = "./data_synthetic/pcd_plane"
+        rootpath2 = "./data_synthetic/pcd_nonplane"
+        train_ratio1 = 0.9
+        train_ratio2 = 0.9
+        mod = "train"
+
+        no_noise_savepath = os.path.join(DATA_PATH, f"pcd_combined_{mod}/pcd_no_noise")
+        shutil.rmtree(no_noise_savepath)
+        os.makedirs(no_noise_savepath)
+
+        noise_savepath = os.path.join(DATA_PATH, f"pcd_combined_{mod}/pcd_noise")
+        shutil.rmtree(noise_savepath)
+        os.makedirs(noise_savepath)
+
+        label_savepath = os.path.join(DATA_PATH, f"pcd_combined_{mod}/label")
+        shutil.rmtree(label_savepath)
+        os.makedirs(label_savepath)
+
+        # loading data with planes (dataset 1)
+        cloud_path1 = os.path.join(rootpath1, "pcd_noise")
+        cloud_filename1 = sorted(os.listdir(cloud_path1))
+        cloud_files1 = [os.path.join(cloud_path1, filename) for filename in cloud_filename1]
+        
+        label_path1 = os.path.join(rootpath1, "label")
+        label_filename1 = sorted(os.listdir(label_path1))
+        label_files1 = [os.path.join(label_path1, filename) for filename in label_filename1]
+        assert len(cloud_files1) == len(label_files1)
+
+        # split data with planes (dataset 1)
+        model_num1 = len(cloud_files1)
+        train_size1 = int(model_num1 * train_ratio1)
+        indices1 = list(range(model_num1))
+        random.seed(4)
+        random.shuffle(indices1)
+        if mod == "train":
+            split_indices1 = indices1[:train_size1]
+        elif mod == "test":
+            split_indices1 = indices1[train_size1:]
+        else:
+            raise Exception("mod should be train or test")
+        print(f"loading {len(split_indices1)} models ...")
+
+        plane_points_list = []
+        plane_label_list = []
+        for i in tqdm(split_indices1, total=len(split_indices1)):
+            # load point cloud
+            pcd = o3d.io.read_point_cloud(cloud_files1[i])
+            points = np.asarray(pcd.points)
+            plane_points_list.append(points)
+
+            # load labels
+            labels = np.load(label_files1[i]).astype(np.float64)
+            plane_label_list.append(labels)
+
+        # loading data with non-planes (dataset 2)
+        cloud_path2 = os.path.join(rootpath2, "pcd_noise")
+        cloud_filename2 = sorted(os.listdir(cloud_path2))
+        cloud_files2 = [os.path.join(cloud_path2, filename) for filename in cloud_filename2]
+        
+        label_path2 = os.path.join(rootpath2, "label")
+        label_filename2 = sorted(os.listdir(label_path2))
+        label_files2 = [os.path.join(label_path2, filename) for filename in label_filename2]
+        assert len(cloud_files2) == len(label_files2)
+
+        # split data with non-planes (dataset 2)
+        model_num2 = len(cloud_files2)
+        train_size2 = int(model_num2 * train_ratio2)
+        indices2 = list(range(model_num2))
+        random.seed(4)
+        random.shuffle(indices2)
+        if mod == "train":
+            split_indices2 = indices2[:train_size2]
+        elif mod == "test":
+            split_indices2 = indices2[train_size2:]
+        else:
+            raise Exception("mod should be train or test")
+        print(f"loading {len(split_indices2)} models ...")
+
+        for i in tqdm(split_indices2, total=len(split_indices2)):
+            # load point cloud
+            pcd = o3d.io.read_point_cloud(cloud_files2[i])
+            points = np.asarray(pcd.points)
+            points = points - np.mean(points, axis=0)
+            coord_min, coord_max = np.amin(points, axis=0)[:3], np.amax(points, axis=0)[:3]
+
+            # load labels
+            labels = np.load(label_files2[i]).astype(np.float64)
+
+            # choose planes
+            plane_idx = np.random.choice(np.arange(len(plane_points_list)), 5, replace=False)
+            plane_points_0 = plane_points_list[plane_idx[0]]
+            plane_points_1 = plane_points_list[plane_idx[1]]
+            plane_points_2 = plane_points_list[plane_idx[2]]
+            plane_points_3 = plane_points_list[plane_idx[3]]
+            plane_points_4 = plane_points_list[plane_idx[4]]
+
+            plane_labels_0 = plane_label_list[plane_idx[0]]
+            plane_labels_1 = plane_label_list[plane_idx[1]]
+            plane_labels_2 = plane_label_list[plane_idx[2]]
+            plane_labels_3 = plane_label_list[plane_idx[3]]
+            plane_labels_4 = plane_label_list[plane_idx[4]]
+
+            offset_x = (coord_max[0]*0.5 - coord_min[0]) * np.random.random_sample() + coord_min[0]
+            offset_y = (coord_max[1]*0.5 - coord_min[1]) * np.random.random_sample() + coord_min[1]
+            plane_points_0 = plane_points_0 - np.mean(plane_points_0, axis=0) + np.array([0, 0, coord_max[2]])
+            plane_points_1 = plane_points_1 - np.mean(plane_points_1, axis=0) + np.array([0, offset_y, coord_max[2]])
+            plane_points_2 = plane_points_2 - np.mean(plane_points_2, axis=0) + np.array([offset_x, 0, coord_max[2]])
+            plane_points_3 = plane_points_3 - np.mean(plane_points_3, axis=0) + coord_max
+            plane_points_4 = plane_points_4 - np.mean(plane_points_4, axis=0) + coord_min
+
+            combined_points = np.concatenate((points, plane_points_0, plane_points_1, plane_points_2, plane_points_3, plane_points_4))
+            combined_labels = np.concatenate((labels, plane_labels_0, plane_labels_1, plane_labels_2, plane_labels_3, plane_labels_4))
+            points_num = combined_points.shape[0]
+            assert combined_points.shape[0] == combined_labels.shape[0]
+
+            # colors
+            plane_colors = np.array([[0.1, 0.1, 0.3]])
+            non_plane_colors = np.array([[0.8, 0.2, 0.3]])
+            combined_colors = np.repeat(non_plane_colors, points_num, axis=0)
+            combined_colors[combined_labels==1] = plane_colors
+
+            # create point cloud
+            pcd = o3d.geometry.PointCloud()
+            pcd.points = o3d.utility.Vector3dVector(combined_points)
+            pcd.colors = o3d.Vector3dVector(combined_colors)
+
+            # save the label
+            label_path = os.path.join(label_savepath, f"{i}.npy")
+            np.save(label_path, combined_labels)
+
+            # save the point cloud
+            pcd_path = os.path.join(no_noise_savepath, f"{i}.pcd")
+            o3d.io.write_point_cloud(pcd_path, pcd)
+
+            # add gaussian noise
+            a = 0.03
+            b = 0.005
+            sigma = (a - b) * np.random.random_sample() + b
+            pcd_shape = np.asarray(pcd.points).shape
+            gaussian_noise = np.random.normal(0, sigma, size=pcd_shape)
+            pcd.points = o3d.utility.Vector3dVector(np.asarray(pcd.points) + gaussian_noise)
+
+            # save the noisy point cloud
+            pcd_path = os.path.join(noise_savepath, f"{i}.pcd")
+            o3d.io.write_point_cloud(pcd_path, pcd)
+            # o3d.visualization.draw_geometries([pcd])
+            # break
+
+    elif args.data == "plane_pcd":
         cloud_path = os.path.join(DATA_PATH, "rawDataPlane/cameraPC")
         cloud_filename = sorted(os.listdir(cloud_path))
         cloud_files = [os.path.join(cloud_path, filename) for filename in cloud_filename]
